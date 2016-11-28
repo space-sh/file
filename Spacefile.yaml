@@ -1,0 +1,106 @@
+_dep_install:
+    _info:
+        title: Check dependencies for this module.
+    _env:
+        - CMD: FILE_DEP_INSTALL
+rmrf:
+    _info:
+        title: rm -f a directory.
+    _env:
+        - CMD: FILE_RMRF -- ${dir-}
+mkdirp:
+    _info:
+        title: mkdir -p
+    _env:
+        - CMD: FILE_MKDIRP -- ${dir-}
+chmod:
+    _info:
+        title: chmod file
+    _env:
+        - CMD: FILE_CHMOD -- ${permissions-} ${file-}
+chownr:
+    _info:
+        title: chown -r directory
+    _env:
+        - CMD: FILE_CHOWNR -- ${owner-} ${dir-}
+direxist:
+    _info:
+        title: Dir exist.
+    _env:
+        - CMD: FILE_DIREXIST -- ${dir-}
+dirnotexist:
+    _info:
+        title: Dir not exist.
+    _env:
+        - CMD: FILE_DIRNOTEXIST -- ${dir-}
+fileexist:
+    _info:
+        title: File exist.
+    _env:
+        - CMD: FILE_EXIST -- ${file-}
+filenotexist:
+    _info:
+        title: File not exist.
+    _env:
+        - CMD: FILE_NOT_EXIST -- ${file-}
+touch:
+    _info:
+        title: touch file
+    _env:
+        - CMD: FILE_TOUCH -- ${file-}
+cp:
+    _info:
+        title: Copy file (within same system).
+    _env:
+        - CMD: FILE_CP -- ${src-} ${dest-}
+rowpersist:
+    _info:
+        title: Make sure row exist in file.
+    _env:
+        - CMD: FILE_ROW_PERSIST -- "${row-}" ${file-}
+rowexist:
+    _info:
+        title: Check if a row exist or not in file.
+    _env:
+        - exist: ${exist:-1}
+        - CMD: FILE_ROW_EXIST -- "${row-}" ${file-} ${exist-}
+grepcount:
+    _info:
+        title: grep a file against pattern and expect count matches.
+    _env:
+        - CMD: FILE_GREP -- "${pattern-}" ${file-} ${count-} ${operator-}
+grep:
+    _info:
+        title: grep a file against pattern.
+    _env:
+        - CMD: FILE_GREP -- "${pattern-}" ${file-}
+sed:
+    _info:
+        title: sed a file against pattern in place.
+    _env:
+        - CMD: FILE_SED -- "${pattern-}" ${file-}
+append:
+    _info:
+        title: Append row to file.
+    _env:
+        - CMD: FILE_APPEND -- "${row-}" ${file-}
+pipewrite:
+    _info:
+        title: Write to a file from stdin.
+    _env:
+        - CMD: FILE_PIPE_WRITE -- ${file-}
+pipeappend:
+    _info:
+        title: Append to a file from stdin.
+    _env:
+        - CMD: FILE_PIPE_APPEND -- ${file-}
+getpermissions:
+    _info:
+        title: Get recursive list of permissions.
+    _env:
+        - CMD: FILE_GET_PERMISSIONS -- ${dir-} ${maxdepth-}
+restorepermissions:
+    _info:
+        title: Restore list of permissions.
+    _env:
+        - CMD: FILE_RESTORE_PERMISSIONS -- ${dir-} "${permissions-}"

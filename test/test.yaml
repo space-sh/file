@@ -1,0 +1,130 @@
+_info:
+    title: Test suite for the File module.
+    desc: |
+        These tests uses the "testrunner" module to run the tests.
+        If the tests are run directly as-is outside a wrapper,
+        they might wreak havoc on your system.
+        TestRunner module wraps the tests properly.
+_env:
+    - CMD: ${_SPACEBIN} -m testrunner /run/ -- -- @{DIR}/test.yaml
+
+_platforms:
+    - type: docker
+      subtype: debian
+    - type: docker
+      subtype: ubuntu
+    - type: docker
+      subtype: alpine
+    - type: docker
+      subtype: busybox
+
+_tests:
+    -
+        -
+            @include: @{DIR}/../Spacefile.yaml|/_install
+        -
+            _env:
+                - row: "#spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
+                - file: /etc/passwd
+                - exist: 0
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that "spacegal" row does not already exist in /etc/passwd.
+        -
+            _info:
+                title: Make sure that the row exist.
+            _env:
+                - row: "#spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
+                - file: /etc/passwd
+            @include: @{DIR}/../Spacefile.yaml|/rowpersist
+        -
+            _env:
+                - row: "#spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
+                - file: /etc/passwd
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that "spacegal" row now does exist in /etc/passwd.
+        -
+            _env:
+                - pattern: "s/^#spacegal:x:333:333:SpaceGal:\/home\/spacegal:\/bin\/false/spacegal:x:333:333:SpaceGal:\/home\/spacegal:\/bin\/false/g"
+                - file: /etc/passwd
+            @include: @{DIR}/../Spacefile.yaml|/sed
+            _info:
+                title: Use sed to uncomment the "spacegal" row.
+        -
+            _env:
+                - row: "spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
+                - file: /etc/passwd
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that the commented out "spacegal" user (row) does not exist in /etc/passwd.
+        -
+            _env:
+                - row: "spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
+                - file: /etc/passwd
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that the "spacegal" user (row) exist in /etc/passwd.
+        -
+            _env:
+                - file: /etc/passwd
+                - CMDREDIR: "<@{DIR}/file.txt"
+            @include: @{DIR}/../Spacefile.yaml|/pipewrite
+            _info:
+                title: Write file.txt to /etc/passwd over pipe (overwrite).
+        -
+            _env:
+                - row: "Another row."
+                - file: /etc/passwd
+                - exist: 1
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that a row from file.txt exist in /etc/passwd.
+        -
+            _env:
+                - row: "spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
+                - file: /etc/passwd
+                - exist: 0
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that the "spacegal" user (row) does not exist anymore in /etc/passwd.
+        -
+            _env:
+                - file: /etc/passwd
+                - CMDREDIR: "<@{DIR}/file2.txt"
+            @include: @{DIR}/../Spacefile.yaml|/pipeappend
+            _info:
+                title: Append file2.txt to /etc/passwd over pipe.
+        -
+            _env:
+                - row: "Another row."
+                - file: /etc/passwd
+                - exist: 1
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that a row from file.txt exist in /etc/passwd.
+        -
+            _env:
+                - row: "Totally new row."
+                - file: /etc/passwd
+                - exist: 1
+            @include: @{DIR}/../Spacefile.yaml|/rowexist
+            _info:
+                title: Check so that a row from file2.txt exist in /etc/passwd.
+        -
+            _env:
+                - pattern: "^Totally new row.\$"
+                - file: /etc/passwd
+                - count: "1"
+                - operator: "gt"
+                - CMDREDIR: ">/dev/null"
+            @include: @{DIR}/../Spacefile.yaml|/grepcount
+            _info:
+                title: Check so that more than one specific row from file2.txt exist in /etc/passwd.
+
+_clean:
+    _info:
+        title: Do nothing.
+    _env:
+        - CMDWRAP: !unset
+        - CMD: ":"
