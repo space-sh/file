@@ -87,6 +87,14 @@ touch:
     _env:
         - CMD: FILE_TOUCH -- ${file-}
 
+ls:
+    _info:
+        title: List a file
+        desc:|
+            List one or more files.
+    _env:
+        - CMD: FILE_LS -- ${args-}
+
 cp:
     _info:
         title: Copy a file
