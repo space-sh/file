@@ -376,7 +376,7 @@ FILE_CP ()
     local SUDO="${SUDO-}"
     ${SUDO} cp "${src}" "${dest}"
     if [ "$?" -gt 0 ]; then
-        PRINT "Could not touch file: ${file}." "error"
+        PRINT "Could not copy from ${src} to ${dest}." "error"
         return 1
     fi
 }
