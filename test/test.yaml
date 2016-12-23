@@ -137,6 +137,89 @@ _tests:
             @include: @{DIR}/../Spacefile.yaml|/grepcount
             _info:
                 title: Check so that more than one specific row from file2.txt exist in /etc/passwd.
+        -
+            _env:
+                - dir: /root/some_new_dir
+            @include: @{DIR}/../Spacefile.yaml|/mkdirp
+            _info:
+                title: Create a directory
+        -
+            _env:
+                - args: /root/some_new_dir
+            @include: @{DIR}/../Spacefile.yaml|/ls
+            _info:
+                title: List a directory
+        -
+            _env:
+                - file: /root/some_new_dir/test_file.sh
+            @include: @{DIR}/../Spacefile.yaml|/touch
+            _info:
+                title: Touch a new file
+        -
+            _env:
+                - src: /root/some_new_dir/test_file.sh
+                - dest: /root/some_new_dir/test_file_copy.sh
+            @include: @{DIR}/../Spacefile.yaml|/cp
+            _info:
+                title: Perform a file copy
+        -
+            _env:
+                - row: "some data" 
+                - file: /root/some_new_dir/test_file_copy.sh
+            @include: @{DIR}/../Spacefile.yaml|/append
+            _info:
+                title: Append row to file copy
+        -
+            _env:
+                - permissions: 777
+                - file: /root/some_new_dir/test_file.sh
+            @include: @{DIR}/../Spacefile.yaml|/chmod
+            _info:
+                title: Set permissions on newly created file
+        -
+            _env:
+                - file: /root/some_new_dir/test_file.sh
+            @include: @{DIR}/../Spacefile.yaml|/fileexist
+            _info:
+                title: Check if the newly created file indeed exists
+        -
+            _env:
+                - dir: /root/some_new_dir
+            @include: @{DIR}/../Spacefile.yaml|/direxist
+            _info:
+                title: Check if the newly created dir exists
+        -
+            _env:
+                - owner: :root
+                - dir: /root/some_new_dir
+            @include: @{DIR}/../Spacefile.yaml|/chownr
+            _info:
+                title: Reset ownership on newly created directory
+        -
+            _env:
+                - dir: /root/some_new_dir
+                - maxdepth: 1
+            @include: @{DIR}/../Spacefile.yaml|/getpermissions
+            _info:
+                title: Get permissions list
+        -
+            _env:
+                - dir: /root/some_new_dir
+            @include: @{DIR}/../Spacefile.yaml|/rmrf
+            _info:
+                title: Remove the directory we had just created
+        -
+            _env:
+                - dir: /root/some_new_dir
+            @include: @{DIR}/../Spacefile.yaml|/dirnotexist
+            _info:
+                title: Check if the directory was indeed removed
+        -
+            _env:
+                - file: /root/some_new_dir/test_file.sh
+            @include: @{DIR}/../Spacefile.yaml|/filenotexist
+            _info:
+                title: Check if the file has been removed
 
 _clean:
     _info:
