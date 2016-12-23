@@ -14,12 +14,16 @@
 # limitations under the License.
 #
 
-#================================
+
+#=============
 # FILE_DEP_INSTALL
 #
-# Do nothing, but conform to /_install/ pattern.
+# Check for module dependencies
 #
-#================================
+# Returns:
+# non-zero on failure
+#
+#=============
 FILE_DEP_INSTALL ()
 {
     SPACE_CMDDEP="PRINT"
@@ -27,6 +31,19 @@ FILE_DEP_INSTALL ()
     # TODO: check for grep, sed
 }
 
+#=============
+# FILE_RMRF
+#
+# Recursively remove a directory path
+#
+# Parameters:
+#   $1: list of directories
+#
+# Returns:
+#   0: success
+#   1: failed removing directory
+#
+#=============
 FILE_RMRF ()
 {
     SPACE_SIGNATURE="dir [dir]"
@@ -46,6 +63,19 @@ FILE_RMRF ()
     fi
 }
 
+#=============
+# FILE_MKDIRP
+#
+# Creates a directory path
+#
+# Parameters:
+#   $1: list of directories
+#
+# Returns:
+#   0: success
+#   1: failure creating directory path
+#
+#=============
 FILE_MKDIRP ()
 {
     SPACE_SIGNATURE="dir [dir]"
@@ -65,6 +95,20 @@ FILE_MKDIRP ()
     fi
 }
 
+#=============
+# FILE_CHMOD
+#
+# Set file permissions
+#
+# Parameters:
+#   $1: permission (octal)
+#   $2: file path
+#
+# Returns:
+#   0: success
+#   1: failed to set permissions
+#
+#=============
 FILE_CHMOD ()
 {
     SPACE_SIGNATURE="permissions file"
@@ -87,6 +131,20 @@ FILE_CHMOD ()
     fi
 }
 
+#=============
+# FILE_CHOWNR
+#
+# Recursively change directory owner
+#
+# Parameters:
+#   $1: owner name
+#   $2: directory path
+#
+# Returns:
+#   0: success
+#   1: failed to change owner
+#
+#=============
 FILE_CHOWNR ()
 {
     SPACE_SIGNATURE="owner dir"
@@ -109,11 +167,19 @@ FILE_CHOWNR ()
     fi
 }
 
-#===========
+#=============
+# FILE_DIREXIST
 #
-# Exists dir.
+# Check if directory path exists
 #
-#===========
+# Parameters:
+#   $1: list of directories
+#
+# Returns:
+#   0: successfully found all directories
+#   1: failed to find one or more directories
+#
+#=============
 FILE_DIREXIST ()
 {
     SPACE_SIGNATURE="dir [dir]"
@@ -133,11 +199,19 @@ FILE_DIREXIST ()
     done
 }
 
-#===========
+#=============
+# FILE_DIRNOTEXIST
 #
-# Not exist dir.
+# Check if directory path does not exist
 #
-#===========
+# Parameters:
+#   $1: list of directories
+#
+# Returns:
+#   0: no directories found
+#   1: found one or more directories
+#
+#=============
 FILE_DIRNOTEXIST ()
 {
     SPACE_SIGNATURE="dir [dir]"
@@ -157,11 +231,19 @@ FILE_DIRNOTEXIST ()
     done
 }
 
-#===========
+#=============
+# FILE_EXIST
 #
-# Exists file.
+# Check if a given file path exists
 #
-#===========
+# Parameters:
+#   $1: list of files
+#
+# Returns:
+#   0: successfully found all files
+#   1: unable to find one of the files
+#
+#=============
 FILE_EXIST ()
 {
     SPACE_SIGNATURE="file [file]"
@@ -181,11 +263,19 @@ FILE_EXIST ()
     done
 }
 
-#===========
+#=============
+# FILE_NOT_EXIST
 #
-# Not exist file.
+# Check if a given file path does not exist
 #
-#===========
+# Parameters:
+#   $1: list of files
+#
+# Returns:
+#   0: none of the files provided were found
+#   1: one of the files exist
+#
+#=============
 FILE_NOT_EXIST ()
 {
     SPACE_SIGNATURE="file [file]"
@@ -205,11 +295,19 @@ FILE_NOT_EXIST ()
     done
 }
 
-#===========
+#=============
+# FILE_TOUCH
 #
-# Touch a file.
+# Touch a file
 #
-#===========
+# Parameters:
+#   $1: list of files
+#
+# Returns:
+#   0: success
+#   1: failed
+#
+#=============
 FILE_TOUCH ()
 {
     SPACE_SIGNATURE="file [file]"
@@ -229,11 +327,18 @@ FILE_TOUCH ()
     fi
 }
 
-#===========
+#=============
+# FILE_LS
 #
-# List files.
+# List files
 #
-#===========
+# Parameters:
+#   $1: list of files and arguments
+#
+# Returns:
+#   Non-zero on error. POSIX ls return values. See also: `man ls`
+#
+#=============
 FILE_LS ()
 {
     SPACE_SIGNATURE="[args]"
@@ -241,11 +346,19 @@ FILE_LS ()
     ls "${@}"
 }
 
-#===========
+#=============
+# FILE_CP
 #
-# Copy a file.
+# Copy a file
 #
-#===========
+# Parameters:
+#   $1: source to copy from
+#   $2: destination to copy to
+#
+# Returns:
+#   Non-zero on error. POSIX cp return values. See also: `man cp`
+#
+#=============
 FILE_CP ()
 {
     SPACE_SIGNATURE="src dest"
@@ -268,11 +381,22 @@ FILE_CP ()
     fi
 }
 
-#===========
+#=============
+# FILE_ROW_EXIST
 #
 # Check if a specific row exist or not in a text file.
 #
-#===========
+# Parameters:
+#   $1: row data to check from
+#   $2: file to check
+#   $3: exist flag
+#
+# Returns:
+#   0: success
+#   1: row does not exist
+#   2: file not found
+#
+#=============
 FILE_ROW_EXIST ()
 {
     SPACE_SIGNATURE="row file [exist]"
@@ -309,11 +433,21 @@ FILE_ROW_EXIST ()
     fi
 }
 
-#===========
+#=============
+# FILE_ROW_PERSIST
 #
 # Make sure a specific row exist in a text file.
 #
-#===========
+# Parameters:
+#   $1: row data to check from
+#   $2: file to check
+#
+# Returns:
+#   0: success
+#   1: row does not exist
+#   2: file not found
+#
+#=============
 FILE_ROW_PERSIST ()
 {
     SPACE_SIGNATURE="row file"
@@ -340,7 +474,7 @@ FILE_ROW_PERSIST ()
     fi
 }
 
-#======================
+#=============
 # FILE_GREP
 #
 # Grep on file.
@@ -348,7 +482,18 @@ FILE_ROW_PERSIST ()
 # Comparison operator could also be given,
 # default is "eq".
 #
-#======================
+# Parameters:
+#   $1: pattern
+#   $2: file path
+#   $3: count to match. Default: ""
+#   $4: operator. Default: "eq"
+#
+# Returns:
+#   0: success
+#   1: failed to match pattern or failed to match count
+#   2: file not found
+#
+#=============
 FILE_GREP ()
 {
     SPACE_SIGNATURE="pattern file [count operator]"
@@ -405,6 +550,20 @@ FILE_GREP ()
     fi
 }
 
+#=============
+# FILE_SED
+#
+# Sed a pattern in place
+#
+# Parameters:
+#   $1: pattern
+#   $2: file path
+#
+# Returns:
+#   0: success
+#   1: failed access file or failed to write to file
+#
+#=============
 FILE_SED ()
 {
     SPACE_SIGNATURE="pattern file"
@@ -433,6 +592,20 @@ FILE_SED ()
     fi
 }
 
+#=============
+# FILE_APPEND
+#
+# Append row to file
+#
+# Parameters:
+#   $1: row data
+#   $2: file path
+#
+# Returns:
+#   0: success
+#   1: failed writing to file
+#
+#=============
 FILE_APPEND ()
 {
     SPACE_SIGNATURE="row file"
@@ -469,6 +642,19 @@ FILE_APPEND ()
     fi
 }
 
+#=============
+# FILE_PIPE_WRITE
+#
+# Write to a file from stdin
+#
+# Parameters:
+#   $1: file path
+#
+# Returns:
+#   0: success
+#   1: failed writing to file
+#
+#=============
 FILE_PIPE_WRITE ()
 {
     SPACE_SIGNATURE="file"
@@ -488,6 +674,19 @@ FILE_PIPE_WRITE ()
     fi
 }
 
+#=============
+# FILE_PIPE_APPEND
+#
+# Append to a file from stdin
+#
+# Parameters:
+#   $1: file path
+#
+# Returns:
+#   0: success
+#   1: failed writing to file
+#
+#=============
 FILE_PIPE_APPEND ()
 {
     SPACE_SIGNATURE="file"
@@ -507,13 +706,19 @@ FILE_PIPE_APPEND ()
     fi
 }
 
-#=================
+#=============
 # FILE_GET_PERMISSIONS
 #
 # Get a list of directory and file permissions
 # which could be stored and used later for restoring permissions.
 #
-#=================
+# Parameters:
+#   $1: directory path
+#
+# Returns:
+#   Text output on stdout.
+#
+#=============
 FILE_GET_PERMISSIONS ()
 {
     SPACE_SIGNATURE="dir [maxdepth]"
@@ -532,12 +737,20 @@ FILE_GET_PERMISSIONS ()
     ${SUDO} find "${dir}" ${maxdepth} -exec stat -c"%n %a %U:%G" {} \;
 }
 
-#=================
-# FILE_SET_PERMISSIONS
+#=============
+# FILE_RESTORE_PERMISSIONS
 #
 # Restore permissions.
 #
-#=================
+# Parameters:
+#   $1: directory path
+#   $2: permissions
+#
+# Returns:
+#   0: success
+#   1: failed to chown or failed to chmod
+#
+#=============
 FILE_RESTORE_PERMISSIONS ()
 {
     # shellcheck disable=2034
@@ -577,3 +790,4 @@ FILE_RESTORE_PERMISSIONS ()
         fi
     done
 }
+
