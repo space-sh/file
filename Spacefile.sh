@@ -29,7 +29,7 @@
 FILE_DEP_INSTALL ()
 {
     SPACE_CMDDEP="PRINT"
-    PRINT "No particular dependencies." "success"
+    PRINT "No particular dependencies." "ok"
     # TODO: check for grep, sed
 }
 
