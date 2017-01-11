@@ -166,7 +166,7 @@ _tests:
             _env:
                 - row: "some data" 
                 - file: /root/some_new_dir/test_file_copy.sh
-            @include: @{DIR}/../Spacefile.yaml|/append
+            @include: @{DIR}/../Spacefile.yaml|/appendrow
             _info:
                 title: Append row to file copy
         -

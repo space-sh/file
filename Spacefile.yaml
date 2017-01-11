@@ -138,11 +138,11 @@ sed:
     _env:
         - CMD: FILE_SED -- "${pattern-}" ${file-}
 
-append:
+appendrow:
     _info:
         title: Append row to file
     _env:
-        - CMD: FILE_APPEND -- "${row-}" ${file-}
+        - CMD: FILE_APPEND_ROW -- "${row-}" ${file-}
 
 pipewrite:
     _info:

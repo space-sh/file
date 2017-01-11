@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+# Module for working with text files.
+#
 
 #=============
 # FILE_DEP_INSTALL
@@ -400,7 +402,7 @@ FILE_CP ()
 FILE_ROW_EXIST ()
 {
     SPACE_SIGNATURE="row file [exist]"
-    SPACE_CMDDEP="PRINT FILE_APPEND"
+    SPACE_CMDDEP="PRINT"
     SPACE_CMDENV="SUDO=\${SUDO-}"
 
     local row="${1}"
@@ -436,22 +438,22 @@ FILE_ROW_EXIST ()
 #=============
 # FILE_ROW_PERSIST
 #
-# Make sure a specific row exist in a text file.
+# Make sure a specific row exist in a text file,
+# creates the file if it's missing.
 #
 # Parameters:
-#   $1: row data to check from
+#   $1: row data to persist.
 #   $2: file to check
 #
 # Returns:
 #   0: success
-#   1: row does not exist
-#   2: file not found
+#   1: could not write to file
 #
 #=============
 FILE_ROW_PERSIST ()
 {
     SPACE_SIGNATURE="row file"
-    SPACE_CMDDEP="PRINT FILE_APPEND"
+    SPACE_CMDDEP="PRINT FILE_APPEND_ROW"
     SPACE_CMDENV="SUDO=\${SUDO-}"
 
     local row="${1}"
@@ -466,11 +468,11 @@ FILE_ROW_PERSIST ()
     ${SUDO} grep -q "^${row}\$" "${file}" 2>/dev/null
     local status="$?"
     if [ "${status}" = "2" ]; then
-        PRINT "File not found: ${file}." "error"
-        return 2
+        PRINT "File not found: ${file}, create it and add row." "debug"
+        FILE_APPEND_ROW "${row}" "${file}"
     elif [ "${status}" = "1" ]; then
-        PRINT "Row does not exist." "debug"
-        FILE_APPEND "${row}" "${file}"
+        PRINT "Row does not exist, add row." "debug"
+        FILE_APPEND_ROW "${row}" "${file}"
     fi
 }
 
@@ -593,9 +595,9 @@ FILE_SED ()
 }
 
 #=============
-# FILE_APPEND
+# FILE_APPEND_ROW
 #
-# Append row to file
+# Append a row to a text file.
 #
 # Parameters:
 #   $1: row data
@@ -606,7 +608,7 @@ FILE_SED ()
 #   1: failed writing to file
 #
 #=============
-FILE_APPEND ()
+FILE_APPEND_ROW ()
 {
     SPACE_SIGNATURE="row file"
     SPACE_CMDDEP="PRINT"
