@@ -93,7 +93,7 @@ ls:
         desc:|
             List one or more files.
     _env:
-        - CMD: FILE_LS -- ${args-}
+        - CMD: FILE_LS -- ${lsargs-}
 
 cp:
     _info:

@@ -335,7 +335,7 @@ FILE_TOUCH ()
 # List files
 #
 # Parameters:
-#   $1: list of files and arguments
+#   $1: list of arguments
 #
 # Returns:
 #   Non-zero on error. POSIX ls return values. See also: `man ls`
@@ -343,7 +343,7 @@ FILE_TOUCH ()
 #=============
 FILE_LS ()
 {
-    SPACE_SIGNATURE="[args]"
+    SPACE_SIGNATURE="[lsargs]"
 
     ls "${@}"
 }
