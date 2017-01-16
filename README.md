@@ -3,7 +3,7 @@
 Handles all file operations, including creating, searching, setting permissions and removing files.
 
 
-## /append/
+## /appendrow/
 	Append row to file
 
 
@@ -53,6 +53,12 @@ Handles all file operations, including creating, searching, setting permissions 
 	Grep and match count
 
 	Grep a file against pattern and expect the given count to match.
+
+
+## /ls/
+	List a file
+
+	List one or more files.
 
 
 ## /mkdirp/
@@ -254,7 +260,7 @@ Touch a file
 List files  
   
 ### Parameters:  
-- $1: list of files and arguments  
+- $1: list of arguments  
   
 ### Returns:  
 - Non-zero on error. POSIX ls return values. See also: `man ls`  
@@ -298,16 +304,16 @@ Check if a specific row exist or not in a text file.
   
   
   
-Make sure a specific row exist in a text file.  
+Make sure a specific row exist in a text file,  
+creates the file if it's missing.  
   
 ### Parameters:  
-- $1: row data to check from  
+- $1: row data to persist.  
 - $2: file to check  
   
 ### Returns:  
 - 0: success  
-- 1: row does not exist  
-- 2: file not found  
+- 1: could not write to file  
   
   
   
@@ -349,11 +355,11 @@ Sed a pattern in place
   
   
   
-## FILE\_APPEND ()  
+## FILE\_APPEND\_ROW ()  
   
   
   
-Append row to file  
+Append a row to a text file.  
   
 ### Parameters:  
 - $1: row data  
