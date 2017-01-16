@@ -28,7 +28,7 @@
 #=============
 FILE_DEP_INSTALL ()
 {
-    SPACE_CMDDEP="PRINT"
+    SPACE_DEP="PRINT"
     PRINT "No particular dependencies." "ok"
     # TODO: check for grep, sed
 }
@@ -49,8 +49,8 @@ FILE_DEP_INSTALL ()
 FILE_RMRF ()
 {
     SPACE_SIGNATURE="dir [dir]"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local dir="${*}"
     shift
@@ -81,8 +81,8 @@ FILE_RMRF ()
 FILE_MKDIRP ()
 {
     SPACE_SIGNATURE="dir [dir]"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local dir="${*}"
     shift
@@ -114,8 +114,8 @@ FILE_MKDIRP ()
 FILE_CHMOD ()
 {
     SPACE_SIGNATURE="permissions file"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local octets="${1}"
     shift
@@ -150,8 +150,8 @@ FILE_CHMOD ()
 FILE_CHOWNR ()
 {
     SPACE_SIGNATURE="owner dir"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local owner="${1}"
     shift
@@ -185,7 +185,7 @@ FILE_CHOWNR ()
 FILE_DIREXIST ()
 {
     SPACE_SIGNATURE="dir [dir]"
-    SPACE_CMDDEP="PRINT"
+    SPACE_DEP="PRINT"
 
     local dir="${*}"
     shift
@@ -217,7 +217,7 @@ FILE_DIREXIST ()
 FILE_DIRNOTEXIST ()
 {
     SPACE_SIGNATURE="dir [dir]"
-    SPACE_CMDDEP="PRINT"
+    SPACE_DEP="PRINT"
 
     local dir="${*}"
     shift
@@ -249,7 +249,7 @@ FILE_DIRNOTEXIST ()
 FILE_EXIST ()
 {
     SPACE_SIGNATURE="file [file]"
-    SPACE_CMDDEP="PRINT"
+    SPACE_DEP="PRINT"
 
     local file="${*}"
     shift
@@ -281,7 +281,7 @@ FILE_EXIST ()
 FILE_NOT_EXIST ()
 {
     SPACE_SIGNATURE="file [file]"
-    SPACE_CMDDEP="PRINT"
+    SPACE_DEP="PRINT"
 
     local file="${*}"
     shift
@@ -313,8 +313,8 @@ FILE_NOT_EXIST ()
 FILE_TOUCH ()
 {
     SPACE_SIGNATURE="file [file]"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local file="${*}"
     shift
@@ -364,8 +364,8 @@ FILE_LS ()
 FILE_CP ()
 {
     SPACE_SIGNATURE="src dest"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local src="${1}"
     shift
@@ -402,8 +402,8 @@ FILE_CP ()
 FILE_ROW_EXIST ()
 {
     SPACE_SIGNATURE="row file [exist]"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local row="${1}"
     shift
@@ -453,8 +453,8 @@ FILE_ROW_EXIST ()
 FILE_ROW_PERSIST ()
 {
     SPACE_SIGNATURE="row file"
-    SPACE_CMDDEP="PRINT FILE_APPEND_ROW"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT FILE_APPEND_ROW"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local row="${1}"
     shift
@@ -499,8 +499,8 @@ FILE_ROW_PERSIST ()
 FILE_GREP ()
 {
     SPACE_SIGNATURE="pattern file [count operator]"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local pattern="${1}"
     shift
@@ -569,8 +569,8 @@ FILE_GREP ()
 FILE_SED ()
 {
     SPACE_SIGNATURE="pattern file"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local pattern="${1}"
     shift
@@ -611,8 +611,8 @@ FILE_SED ()
 FILE_APPEND_ROW ()
 {
     SPACE_SIGNATURE="row file"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local data="${1}"
     shift
@@ -660,8 +660,8 @@ FILE_APPEND_ROW ()
 FILE_PIPE_WRITE ()
 {
     SPACE_SIGNATURE="file"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local file="${1}"
     shift
@@ -692,8 +692,8 @@ FILE_PIPE_WRITE ()
 FILE_PIPE_APPEND ()
 {
     SPACE_SIGNATURE="file"
-    SPACE_CMDDEP="PRINT"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
 
     local file="${1}"
     shift
@@ -724,8 +724,8 @@ FILE_PIPE_APPEND ()
 FILE_GET_PERMISSIONS ()
 {
     SPACE_SIGNATURE="dir [maxdepth]"
-    SPACE_CMDENV="SUDO=\${SUDO-}"
-    SPACE_CMDDEP="PRINT"
+    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_DEP="PRINT"
 
     local dir="${1}"
     shift
@@ -758,9 +758,9 @@ FILE_RESTORE_PERMISSIONS ()
     # shellcheck disable=2034
     SPACE_SIGNATURE="dir permissions"
     # shellcheck disable=2034
-    SPACE_CMDENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=\${SUDO-}"
     # shellcheck disable=2034
-    SPACE_CMDDEP="PRINT"
+    SPACE_DEP="PRINT"
 
     local dir="${1}"
     shift
