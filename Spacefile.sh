@@ -50,7 +50,7 @@ FILE_RMRF ()
 {
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local dir="${*}"
     shift
@@ -82,7 +82,7 @@ FILE_MKDIRP ()
 {
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local dir="${*}"
     shift
@@ -115,7 +115,7 @@ FILE_CHMOD ()
 {
     SPACE_SIGNATURE="permissions file"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local octets="${1}"
     shift
@@ -151,7 +151,7 @@ FILE_CHOWNR ()
 {
     SPACE_SIGNATURE="owner dir"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local owner="${1}"
     shift
@@ -314,7 +314,7 @@ FILE_TOUCH ()
 {
     SPACE_SIGNATURE="file [file]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local file="${*}"
     shift
@@ -365,7 +365,7 @@ FILE_CP ()
 {
     SPACE_SIGNATURE="src dest"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local src="${1}"
     shift
@@ -403,7 +403,7 @@ FILE_ROW_EXIST ()
 {
     SPACE_SIGNATURE="row file [exist]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local row="${1}"
     shift
@@ -454,7 +454,7 @@ FILE_ROW_PERSIST ()
 {
     SPACE_SIGNATURE="row file"
     SPACE_DEP="PRINT FILE_APPEND_ROW"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local row="${1}"
     shift
@@ -500,7 +500,7 @@ FILE_GREP ()
 {
     SPACE_SIGNATURE="pattern file [count operator]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local pattern="${1}"
     shift
@@ -570,7 +570,7 @@ FILE_SED ()
 {
     SPACE_SIGNATURE="pattern file"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local pattern="${1}"
     shift
@@ -612,7 +612,7 @@ FILE_APPEND_ROW ()
 {
     SPACE_SIGNATURE="row file"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local data="${1}"
     shift
@@ -661,7 +661,7 @@ FILE_PIPE_WRITE ()
 {
     SPACE_SIGNATURE="file"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local file="${1}"
     shift
@@ -693,7 +693,7 @@ FILE_PIPE_APPEND ()
 {
     SPACE_SIGNATURE="file"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
 
     local file="${1}"
     shift
@@ -724,7 +724,7 @@ FILE_PIPE_APPEND ()
 FILE_GET_PERMISSIONS ()
 {
     SPACE_SIGNATURE="dir [maxdepth]"
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
     SPACE_DEP="PRINT"
 
     local dir="${1}"
@@ -758,7 +758,7 @@ FILE_RESTORE_PERMISSIONS ()
     # shellcheck disable=2034
     SPACE_SIGNATURE="dir permissions"
     # shellcheck disable=2034
-    SPACE_ENV="SUDO=\${SUDO-}"
+    SPACE_ENV="SUDO=${SUDO-}"
     # shellcheck disable=2034
     SPACE_DEP="PRINT"
 
@@ -792,4 +792,3 @@ FILE_RESTORE_PERMISSIONS ()
         fi
     done
 }
-

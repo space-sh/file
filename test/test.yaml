@@ -22,7 +22,7 @@ _info:
         they might wreak havoc on your system.
         TestRunner module wraps the tests properly.
 _env:
-    - CMD: ${_SPACEBIN} -m testrunner /run/ -- -- @{DIR}/test.yaml
+    - RUN: ${_SPACEBIN} -m testrunner /run/ -- -- @{DIR}/test.yaml
 
 _platforms:
     - type: docker
@@ -84,7 +84,7 @@ _tests:
         -
             _env:
                 - file: /etc/passwd
-                - CMDREDIR: "<@{DIR}/file.txt"
+                - SPACE_REDIR: "<@{DIR}/file.txt"
             @include: @{DIR}/../Spacefile.yaml|/pipewrite
             _info:
                 title: Write file.txt to /etc/passwd over pipe (overwrite).
@@ -107,7 +107,7 @@ _tests:
         -
             _env:
                 - file: /etc/passwd
-                - CMDREDIR: "<@{DIR}/file2.txt"
+                - SPACE_REDIR: "<@{DIR}/file2.txt"
             @include: @{DIR}/../Spacefile.yaml|/pipeappend
             _info:
                 title: Append file2.txt to /etc/passwd over pipe.
@@ -133,7 +133,7 @@ _tests:
                 - file: /etc/passwd
                 - count: "1"
                 - operator: "gt"
-                - CMDREDIR: ">/dev/null"
+                - SPACE_REDIR: ">/dev/null"
             @include: @{DIR}/../Spacefile.yaml|/grepcount
             _info:
                 title: Check so that more than one specific row from file2.txt exist in /etc/passwd.
@@ -225,5 +225,5 @@ _clean:
     _info:
         title: Do nothing.
     _env:
-        - CMDWRAP: !unset
-        - CMD: ":"
+        - SPACE_WRAP: !unset
+        - RUN: ":"

@@ -18,7 +18,7 @@ _dep_install:
     _info:
         title: Check dependencies for this module.
     _env:
-        - CMD: FILE_DEP_INSTALL
+        - RUN: FILE_DEP_INSTALL
 
 _info:
     title: File module
@@ -31,7 +31,7 @@ rmrf:
         desc:|
             rm -rf a directory.
     _env:
-        - CMD: FILE_RMRF -- ${dir-}
+        - RUN: FILE_RMRF -- ${dir-}
 
 mkdirp:
     _info:
@@ -39,7 +39,7 @@ mkdirp:
         desc:|
             mkdir -p.
     _env:
-        - CMD: FILE_MKDIRP -- ${dir-}
+        - RUN: FILE_MKDIRP -- ${dir-}
 
 chmod:
     _info:
@@ -47,7 +47,7 @@ chmod:
         desc:|
             chmod file.
     _env:
-        - CMD: FILE_CHMOD -- ${permissions-} ${file-}
+        - RUN: FILE_CHMOD -- ${permissions-} ${file-}
 
 chownr:
     _info:
@@ -55,37 +55,37 @@ chownr:
         desc:|
             chown -r directory.
     _env:
-        - CMD: FILE_CHOWNR -- ${owner-} ${dir-}
+        - RUN: FILE_CHOWNR -- ${owner-} ${dir-}
 
 direxist:
     _info:
         title: Check if directory path exists
     _env:
-        - CMD: FILE_DIREXIST -- ${dir-}
+        - RUN: FILE_DIREXIST -- ${dir-}
 
 dirnotexist:
     _info:
         title: Check if directory path does not exist
     _env:
-        - CMD: FILE_DIRNOTEXIST -- ${dir-}
+        - RUN: FILE_DIRNOTEXIST -- ${dir-}
 
 fileexist:
     _info:
         title: Check if a file path exists
     _env:
-        - CMD: FILE_EXIST -- ${file-}
+        - RUN: FILE_EXIST -- ${file-}
 
 filenotexist:
     _info:
         title: Check if a file path does not exist
     _env:
-        - CMD: FILE_NOT_EXIST -- ${file-}
+        - RUN: FILE_NOT_EXIST -- ${file-}
 
 touch:
     _info:
         title: Touch a file
     _env:
-        - CMD: FILE_TOUCH -- ${file-}
+        - RUN: FILE_TOUCH -- ${file-}
 
 ls:
     _info:
@@ -93,7 +93,7 @@ ls:
         desc:|
             List one or more files.
     _env:
-        - CMD: FILE_LS -- ${lsargs-}
+        - RUN: FILE_LS -- ${lsargs-}
 
 cp:
     _info:
@@ -101,7 +101,7 @@ cp:
         desc:|
             Copies a file within same system.
     _env:
-        - CMD: FILE_CP -- ${src-} ${dest-}
+        - RUN: FILE_CP -- ${src-} ${dest-}
 
 rowpersist:
     _info:
@@ -109,14 +109,14 @@ rowpersist:
         desc:|
             Make sure row exists.
     _env:
-        - CMD: FILE_ROW_PERSIST -- "${row-}" ${file-}
+        - RUN: FILE_ROW_PERSIST -- "${row-}" ${file-}
 
 rowexist:
     _info:
         title: Check if a row exists or not in file
     _env:
         - exist: ${exist:-1}
-        - CMD: FILE_ROW_EXIST -- "${row-}" ${file-} ${exist-}
+        - RUN: FILE_ROW_EXIST -- "${row-}" ${file-} ${exist-}
 
 grepcount:
     _info:
@@ -124,47 +124,46 @@ grepcount:
         desc:|
             Grep a file against pattern and expect the given count to match.
     _env:
-        - CMD: FILE_GREP -- "${pattern-}" ${file-} ${count-} ${operator-}
+        - RUN: FILE_GREP -- "${pattern-}" ${file-} ${count-} ${operator-}
 
 grep:
     _info:
         title: Grep pattern
     _env:
-        - CMD: FILE_GREP -- "${pattern-}" ${file-}
+        - RUN: FILE_GREP -- "${pattern-}" ${file-}
 
 sed:
     _info:
         title: Sed a pattern in place
     _env:
-        - CMD: FILE_SED -- "${pattern-}" ${file-}
+        - RUN: FILE_SED -- "${pattern-}" ${file-}
 
 appendrow:
     _info:
         title: Append row to file
     _env:
-        - CMD: FILE_APPEND_ROW -- "${row-}" ${file-}
+        - RUN: FILE_APPEND_ROW -- "${row-}" ${file-}
 
 pipewrite:
     _info:
         title: Write to a file from stdin
     _env:
-        - CMD: FILE_PIPE_WRITE -- ${file-}
+        - RUN: FILE_PIPE_WRITE -- ${file-}
 
 pipeappend:
     _info:
         title: Append to a file from stdin
     _env:
-        - CMD: FILE_PIPE_APPEND -- ${file-}
+        - RUN: FILE_PIPE_APPEND -- ${file-}
 
 getpermissions:
     _info:
         title: Get recursive list of permissions
     _env:
-        - CMD: FILE_GET_PERMISSIONS -- ${dir-} ${maxdepth-}
+        - RUN: FILE_GET_PERMISSIONS -- ${dir-} ${maxdepth-}
 
 restorepermissions:
     _info:
         title: Restore list of permissions
     _env:
-        - CMD: FILE_RESTORE_PERMISSIONS -- ${dir-} "${permissions-}"
-
+        - RUN: FILE_RESTORE_PERMISSIONS -- ${dir-} "${permissions-}"
