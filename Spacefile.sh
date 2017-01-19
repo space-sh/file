@@ -533,7 +533,8 @@ FILE_GREP ()
             printf "%s\n" "${tmp}"
         fi
     else
-        local count2=0 line=
+        local count2=0
+        local line=
         local IFS="
 "
         for line in ${tmp}; do
