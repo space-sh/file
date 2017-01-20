@@ -52,7 +52,7 @@ FILE_RMRF ()
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
-    local dir="${*}"
+    local dir="$*"
     shift
 
     PRINT "Recursively force remove directory: ${dir}." "debug"
@@ -84,7 +84,7 @@ FILE_MKDIRP ()
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
-    local dir="${*}"
+    local dir="$*"
     shift
 
     local SUDO="${SUDO-}"
@@ -187,7 +187,7 @@ FILE_DIREXIST ()
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
 
-    local dir="${*}"
+    local dir="$*"
     shift
 
     PRINT "Exists dir(s): ${dir}" "debug"
@@ -219,7 +219,7 @@ FILE_DIRNOTEXIST ()
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
 
-    local dir="${*}"
+    local dir="$*"
     shift
 
     PRINT "Not exist dir(s): ${dir}" "debug"
@@ -251,7 +251,7 @@ FILE_EXIST ()
     SPACE_SIGNATURE="file [file]"
     SPACE_DEP="PRINT"
 
-    local file="${*}"
+    local file="$*"
     shift
 
     PRINT "Exists file(s): ${file}" "debug"
@@ -283,7 +283,7 @@ FILE_NOT_EXIST ()
     SPACE_SIGNATURE="file [file]"
     SPACE_DEP="PRINT"
 
-    local file="${*}"
+    local file="$*"
     shift
 
     PRINT "Not exist file(s): ${file}" "debug"
@@ -316,7 +316,7 @@ FILE_TOUCH ()
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
-    local file="${*}"
+    local file="$*"
     shift
 
     PRINT "Touch file(s): ${file}" "debug"
@@ -345,7 +345,7 @@ FILE_LS ()
 {
     SPACE_SIGNATURE="[lsargs]"
 
-    ls "${@}"
+    ls "$@"
 }
 
 #=============
