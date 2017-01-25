@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+@source: "@{DIR}/../Spacefile.sh"
+
 _info:
     title: Test suite for the File module.
     desc: |

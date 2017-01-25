@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+---
 _dep_install:
     _info:
         title: Check dependencies for this module.
@@ -167,3 +167,4 @@ restorepermissions:
         title: Restore list of permissions
     _env:
         - RUN: FILE_RESTORE_PERMISSIONS -- ${dir-} "${permissions-}"
+...

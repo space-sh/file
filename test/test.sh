@@ -14,4 +14,3 @@
 # limitations under the License.
 #
 
-_source "${DIR}/../Spacefile.sh"

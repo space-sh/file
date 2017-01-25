@@ -26,7 +26,7 @@
 # non-zero on failure
 #
 #=============
-FILE_DEP_INSTALL ()
+FILE_DEP_INSTALL()
 {
     SPACE_DEP="PRINT"
     PRINT "No particular dependencies." "ok"
@@ -46,7 +46,7 @@ FILE_DEP_INSTALL ()
 #   1: failed removing directory
 #
 #=============
-FILE_RMRF ()
+FILE_RMRF()
 {
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
@@ -78,7 +78,7 @@ FILE_RMRF ()
 #   1: failure creating directory path
 #
 #=============
-FILE_MKDIRP ()
+FILE_MKDIRP()
 {
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
@@ -111,7 +111,7 @@ FILE_MKDIRP ()
 #   1: failed to set permissions
 #
 #=============
-FILE_CHMOD ()
+FILE_CHMOD()
 {
     SPACE_SIGNATURE="permissions file"
     SPACE_DEP="PRINT"
@@ -147,7 +147,7 @@ FILE_CHMOD ()
 #   1: failed to change owner
 #
 #=============
-FILE_CHOWNR ()
+FILE_CHOWNR()
 {
     SPACE_SIGNATURE="owner dir"
     SPACE_DEP="PRINT"
@@ -182,7 +182,7 @@ FILE_CHOWNR ()
 #   1: failed to find one or more directories
 #
 #=============
-FILE_DIREXIST ()
+FILE_DIREXIST()
 {
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
@@ -214,7 +214,7 @@ FILE_DIREXIST ()
 #   1: found one or more directories
 #
 #=============
-FILE_DIRNOTEXIST ()
+FILE_DIRNOTEXIST()
 {
     SPACE_SIGNATURE="dir [dir]"
     SPACE_DEP="PRINT"
@@ -246,7 +246,7 @@ FILE_DIRNOTEXIST ()
 #   1: unable to find one of the files
 #
 #=============
-FILE_EXIST ()
+FILE_EXIST()
 {
     SPACE_SIGNATURE="file [file]"
     SPACE_DEP="PRINT"
@@ -278,7 +278,7 @@ FILE_EXIST ()
 #   1: one of the files exist
 #
 #=============
-FILE_NOT_EXIST ()
+FILE_NOT_EXIST()
 {
     SPACE_SIGNATURE="file [file]"
     SPACE_DEP="PRINT"
@@ -310,7 +310,7 @@ FILE_NOT_EXIST ()
 #   1: failed
 #
 #=============
-FILE_TOUCH ()
+FILE_TOUCH()
 {
     SPACE_SIGNATURE="file [file]"
     SPACE_DEP="PRINT"
@@ -341,7 +341,7 @@ FILE_TOUCH ()
 #   Non-zero on error. POSIX ls return values. See also: `man ls`
 #
 #=============
-FILE_LS ()
+FILE_LS()
 {
     SPACE_SIGNATURE="[lsargs]"
 
@@ -361,7 +361,7 @@ FILE_LS ()
 #   Non-zero on error. POSIX cp return values. See also: `man cp`
 #
 #=============
-FILE_CP ()
+FILE_CP()
 {
     SPACE_SIGNATURE="src dest"
     SPACE_DEP="PRINT"
@@ -399,7 +399,7 @@ FILE_CP ()
 #   2: file not found
 #
 #=============
-FILE_ROW_EXIST ()
+FILE_ROW_EXIST()
 {
     SPACE_SIGNATURE="row file [exist]"
     SPACE_DEP="PRINT"
@@ -450,7 +450,7 @@ FILE_ROW_EXIST ()
 #   1: could not write to file
 #
 #=============
-FILE_ROW_PERSIST ()
+FILE_ROW_PERSIST()
 {
     SPACE_SIGNATURE="row file"
     SPACE_DEP="PRINT FILE_APPEND_ROW"
@@ -496,7 +496,7 @@ FILE_ROW_PERSIST ()
 #   2: file not found
 #
 #=============
-FILE_GREP ()
+FILE_GREP()
 {
     SPACE_SIGNATURE="pattern file [count operator]"
     SPACE_DEP="PRINT"
@@ -567,7 +567,7 @@ FILE_GREP ()
 #   1: failed access file or failed to write to file
 #
 #=============
-FILE_SED ()
+FILE_SED()
 {
     SPACE_SIGNATURE="pattern file"
     SPACE_DEP="PRINT"
@@ -609,7 +609,7 @@ FILE_SED ()
 #   1: failed writing to file
 #
 #=============
-FILE_APPEND_ROW ()
+FILE_APPEND_ROW()
 {
     SPACE_SIGNATURE="row file"
     SPACE_DEP="PRINT"
@@ -658,7 +658,7 @@ FILE_APPEND_ROW ()
 #   1: failed writing to file
 #
 #=============
-FILE_PIPE_WRITE ()
+FILE_PIPE_WRITE()
 {
     SPACE_SIGNATURE="file"
     SPACE_DEP="PRINT"
@@ -690,7 +690,7 @@ FILE_PIPE_WRITE ()
 #   1: failed writing to file
 #
 #=============
-FILE_PIPE_APPEND ()
+FILE_PIPE_APPEND()
 {
     SPACE_SIGNATURE="file"
     SPACE_DEP="PRINT"
@@ -722,7 +722,7 @@ FILE_PIPE_APPEND ()
 #   Text output on stdout.
 #
 #=============
-FILE_GET_PERMISSIONS ()
+FILE_GET_PERMISSIONS()
 {
     SPACE_SIGNATURE="dir [maxdepth]"
     SPACE_ENV="SUDO=${SUDO-}"
@@ -754,7 +754,7 @@ FILE_GET_PERMISSIONS ()
 #   1: failed to chown or failed to chmod
 #
 #=============
-FILE_RESTORE_PERMISSIONS ()
+FILE_RESTORE_PERMISSIONS()
 {
     # shellcheck disable=2034
     SPACE_SIGNATURE="dir permissions"
