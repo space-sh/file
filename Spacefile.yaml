@@ -22,13 +22,13 @@ _dep_install:
 
 _info:
     title: File module
-    desc:|
+    desc: |
         Handles all file operations, including creating, searching, setting permissions and removing files.
 
 rmrf:
     _info:
         title: Recursively remove a directory path
-        desc:|
+        desc: |
             rm -rf a directory.
     _env:
         - RUN: FILE_RMRF -- ${dir-}
@@ -36,7 +36,7 @@ rmrf:
 mkdirp:
     _info:
         title: Create a directory path
-        desc:|
+        desc: |
             mkdir -p.
     _env:
         - RUN: FILE_MKDIRP -- ${dir-}
@@ -44,7 +44,7 @@ mkdirp:
 chmod:
     _info:
         title: Set file permissions
-        desc:|
+        desc: |
             chmod file.
     _env:
         - RUN: FILE_CHMOD -- ${permissions-} ${file-}
@@ -52,7 +52,7 @@ chmod:
 chownr:
     _info:
         title: Change owner
-        desc:|
+        desc: |
             chown -r directory.
     _env:
         - RUN: FILE_CHOWNR -- ${owner-} ${dir-}
@@ -87,10 +87,18 @@ touch:
     _env:
         - RUN: FILE_TOUCH -- ${file-}
 
+cat:
+    _info:
+        title: Cat a file
+        desc: |
+            Cat file
+    _env:
+        - RUN: FILE_CAT -- ${file-}
+
 ls:
     _info:
         title: List a file
-        desc:|
+        desc: |
             List one or more files.
     _env:
         - RUN: FILE_LS -- ${lsargs-}
@@ -98,7 +106,7 @@ ls:
 cp:
     _info:
         title: Copy a file
-        desc:|
+        desc: |
             Copies a file within same system.
     _env:
         - RUN: FILE_CP -- ${src-} ${dest-}
@@ -106,7 +114,7 @@ cp:
 rowpersist:
     _info:
         title: Check if row exists in file
-        desc:|
+        desc: |
             Make sure row exists.
     _env:
         - RUN: FILE_ROW_PERSIST -- "${row-}" ${file-}
@@ -121,7 +129,7 @@ rowexist:
 grepcount:
     _info:
         title: Grep and match count
-        desc:|
+        desc: |
             Grep a file against pattern and expect the given count to match.
     _env:
         - RUN: FILE_GREP -- "${pattern-}" ${file-} ${count-} ${operator-}

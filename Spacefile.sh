@@ -330,6 +330,25 @@ FILE_TOUCH()
 }
 
 #=============
+# FILE_CAT
+#
+# Cat file
+#
+# Parameters:
+#   $1: file
+#
+# Returns:
+#   Non-zero on error.
+#
+#=============
+FILE_CAT()
+{
+    SPACE_SIGNATURE="file [file]"
+
+    cat "$@"
+}
+
+#=============
 # FILE_LS
 #
 # List files
@@ -351,7 +370,7 @@ FILE_LS()
 #=============
 # FILE_CP
 #
-# Copy a file
+# Copy a file within the same OS.
 #
 # Parameters:
 #   $1: source to copy from
