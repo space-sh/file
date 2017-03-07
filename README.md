@@ -3,26 +3,37 @@
 Handles all file operations, including creating, searching, setting permissions and removing files.
 
 
+
 ## /appendrow/
 	Append row to file
+
+
+## /cat/
+	Cat a file
+
+	Cat file
+	
 
 
 ## /chmod/
 	Set file permissions
 
 	chmod file.
+	
 
 
 ## /chownr/
 	Change owner
 
 	chown -r directory.
+	
 
 
 ## /cp/
 	Copy a file
 
 	Copies a file within same system.
+	
 
 
 ## /direxist/
@@ -53,18 +64,21 @@ Handles all file operations, including creating, searching, setting permissions 
 	Grep and match count
 
 	Grep a file against pattern and expect the given count to match.
+	
 
 
 ## /ls/
 	List a file
 
 	List one or more files.
+	
 
 
 ## /mkdirp/
 	Create a directory path
 
 	mkdir -p.
+	
 
 
 ## /pipeappend/
@@ -83,6 +97,7 @@ Handles all file operations, including creating, searching, setting permissions 
 	Recursively remove a directory path
 
 	rm -rf a directory.
+	
 
 
 ## /rowexist/
@@ -93,6 +108,7 @@ Handles all file operations, including creating, searching, setting permissions 
 	Check if row exists in file
 
 	Make sure row exists.
+	
 
 
 ## /sed/
@@ -105,7 +121,7 @@ Handles all file operations, including creating, searching, setting permissions 
 
 # Functions 
 
-## FILE\_DEP\_INSTALL ()  
+## FILE\_DEP\_INSTALL()  
   
   
   
@@ -116,7 +132,7 @@ Check for module dependencies
   
   
   
-## FILE\_RMRF ()  
+## FILE\_RMRF()  
   
   
   
@@ -131,7 +147,7 @@ Recursively remove a directory path
   
   
   
-## FILE\_MKDIRP ()  
+## FILE\_MKDIRP()  
   
   
   
@@ -146,7 +162,7 @@ Creates a directory path
   
   
   
-## FILE\_CHMOD ()  
+## FILE\_CHMOD()  
   
   
   
@@ -162,7 +178,7 @@ Set file permissions
   
   
   
-## FILE\_CHOWNR ()  
+## FILE\_CHOWNR()  
   
   
   
@@ -178,7 +194,7 @@ Recursively change directory owner
   
   
   
-## FILE\_DIREXIST ()  
+## FILE\_DIREXIST()  
   
   
   
@@ -193,7 +209,7 @@ Check if directory path exists
   
   
   
-## FILE\_DIRNOTEXIST ()  
+## FILE\_DIRNOTEXIST()  
   
   
   
@@ -208,7 +224,7 @@ Check if directory path does not exist
   
   
   
-## FILE\_EXIST ()  
+## FILE\_EXIST()  
   
   
   
@@ -223,7 +239,7 @@ Check if a given file path exists
   
   
   
-## FILE\_NOT\_EXIST ()  
+## FILE\_NOT\_EXIST()  
   
   
   
@@ -238,7 +254,7 @@ Check if a given file path does not exist
   
   
   
-## FILE\_TOUCH ()  
+## FILE\_TOUCH()  
   
   
   
@@ -253,7 +269,21 @@ Touch a file
   
   
   
-## FILE\_LS ()  
+## FILE\_CAT()  
+  
+  
+  
+Cat file  
+  
+### Parameters:  
+- $1: file  
+  
+### Returns:  
+- Non-zero on error.  
+  
+  
+  
+## FILE\_LS()  
   
   
   
@@ -267,11 +297,11 @@ List files
   
   
   
-## FILE\_CP ()  
+## FILE\_CP()  
   
   
   
-Copy a file  
+Copy a file within the same OS.  
   
 ### Parameters:  
 - $1: source to copy from  
@@ -282,7 +312,7 @@ Copy a file
   
   
   
-## FILE\_ROW\_EXIST ()  
+## FILE\_ROW\_EXIST()  
   
   
   
@@ -300,7 +330,7 @@ Check if a specific row exist or not in a text file.
   
   
   
-## FILE\_ROW\_PERSIST ()  
+## FILE\_ROW\_PERSIST()  
   
   
   
@@ -317,7 +347,7 @@ creates the file if it's missing.
   
   
   
-## FILE\_GREP ()  
+## FILE\_GREP()  
   
   
   
@@ -339,7 +369,7 @@ default is "eq".
   
   
   
-## FILE\_SED ()  
+## FILE\_SED()  
   
   
   
@@ -355,7 +385,7 @@ Sed a pattern in place
   
   
   
-## FILE\_APPEND\_ROW ()  
+## FILE\_APPEND\_ROW()  
   
   
   
@@ -371,7 +401,7 @@ Append a row to a text file.
   
   
   
-## FILE\_PIPE\_WRITE ()  
+## FILE\_PIPE\_WRITE()  
   
   
   
@@ -386,7 +416,7 @@ Write to a file from stdin
   
   
   
-## FILE\_PIPE\_APPEND ()  
+## FILE\_PIPE\_APPEND()  
   
   
   
@@ -401,7 +431,7 @@ Append to a file from stdin
   
   
   
-## FILE\_GET\_PERMISSIONS ()  
+## FILE\_GET\_PERMISSIONS()  
   
   
   
@@ -416,7 +446,7 @@ which could be stored and used later for restoring permissions.
   
   
   
-## FILE\_RESTORE\_PERMISSIONS ()  
+## FILE\_RESTORE\_PERMISSIONS()  
   
   
   
