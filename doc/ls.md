@@ -12,7 +12,7 @@ List one or more files.
 ## Example
 
 ```sh
-space -m file /ls/ -- "/home/user/temporary_files/some_file.txt"
+space -m file /ls/ -- "/home/user/temporary_files/"
 ```
 
 Exit status code is expected to be 0 on success.

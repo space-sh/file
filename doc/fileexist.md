@@ -10,8 +10,14 @@ Check if a given file exists.
 
 ## Example
 
+Check if a single file exists:
 ```sh
 space -m file /fileexist/ -- "/home/user/temporary_files/some_file.txt"
 ```
 
-Exit status code is expected to be 0 on success.
+Check if a list of files exist:
+```sh
+space -m file /fileexist/ -- "/home/user/temporary_files/some_file.txt" "/tmp/output.txt"
+```
+
+Exit status code is expected to be 0 when successfully found all files.

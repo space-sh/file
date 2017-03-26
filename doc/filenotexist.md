@@ -10,8 +10,14 @@ Check if a given file does not exist.
 
 ## Example
 
+Check if a single file does not exist:
 ```sh
 space -m file /filenotexist/ -- "/home/user/temporary_files/some_file.txt"
 ```
 
-Exit status code is expected to be 0 on success.
+Check if a list of files do not exist:
+```sh
+space -m file /filenotexist/ -- "/home/user/temporary_files/some_file.txt" "/tmp/output.txt"
+```
+
+Exit status code is expected to be 0 when none of the listed files were found.

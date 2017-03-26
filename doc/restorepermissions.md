@@ -12,7 +12,7 @@ Restores a list of directory permissions recursively.
 ## Example
 
 ```sh
-space -m file /restorepermissions/ -- "/home/user/temporary_files/" "1"
+space -m file /restorepermissions/ -- "/home/user/temporary_files/" "755"
 ```
 
 Exit status code is expected to be 0 on success.
