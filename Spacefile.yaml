@@ -31,6 +31,8 @@ rmrf:
         desc: |
             rm -rf a directory.
     _env:
+        - dir:
+            title: Directory to remove recursively
         - RUN: FILE_RMRF -- ${dir-}
 
 mkdirp:
@@ -39,6 +41,8 @@ mkdirp:
         desc: |
             mkdir -p.
     _env:
+        - dir:
+            title: Directory to create
         - RUN: FILE_MKDIRP -- ${dir-}
 
 chmod:
@@ -47,6 +51,10 @@ chmod:
         desc: |
             chmod file.
     _env:
+        - permissions:
+            title: Permissions
+        - file:
+            title: File
         - RUN: FILE_CHMOD -- ${permissions-} ${file-}
 
 chownr:
@@ -55,36 +63,50 @@ chownr:
         desc: |
             chown -r directory.
     _env:
+        - owner:
+            title: Owner
+        - dir:
+            title: Directory
         - RUN: FILE_CHOWNR -- ${owner-} ${dir-}
 
 direxist:
     _info:
         title: Check if directory path exists
     _env:
+        - dir:
+            title: Directory
         - RUN: FILE_DIREXIST -- ${dir-}
 
 dirnotexist:
     _info:
         title: Check if directory path does not exist
     _env:
+        - dir:
+            title: Directory
         - RUN: FILE_DIRNOTEXIST -- ${dir-}
 
 fileexist:
     _info:
         title: Check if a file path exists
     _env:
+        - file:
+            title: File
         - RUN: FILE_EXIST -- ${file-}
 
 filenotexist:
     _info:
         title: Check if a file path does not exist
     _env:
+        - file:
+            title: File
         - RUN: FILE_NOT_EXIST -- ${file-}
 
 touch:
     _info:
         title: Touch a file
     _env:
+        - file:
+            title: File
         - RUN: FILE_TOUCH -- ${file-}
 
 cat:
@@ -93,6 +115,8 @@ cat:
         desc: |
             Cat file
     _env:
+        - file:
+            title: File
         - RUN: FILE_CAT -- ${file-}
 
 ls:
@@ -101,6 +125,8 @@ ls:
         desc: |
             List one or more files.
     _env:
+        - lsargs:
+            title: args
         - RUN: FILE_LS -- ${lsargs-}
 
 cp:
@@ -109,21 +135,33 @@ cp:
         desc: |
             Copies a file within same system.
     _env:
+        - src:
+            title: Source
+        - dest:
+            title: Destination
         - RUN: FILE_CP -- ${src-} ${dest-}
 
 rowpersist:
     _info:
-        title: Check if row exists in file
-        desc: |
-            Make sure row exists.
+        title: Make sure a specific row exists in a file
     _env:
+        - row:
+            title: Row
+        - file:
+            title: File
         - RUN: FILE_ROW_PERSIST -- "${row-}" ${file-}
 
 rowexist:
     _info:
         title: Check if a row exists or not in file
     _env:
-        - exist: ${exist:-1}
+        - row:
+            title: Row
+        - file:
+            title: File
+        - exist:
+            title: Exists or not, default 1.
+            value: ${exist:-1}
         - RUN: FILE_ROW_EXIST -- "${row-}" ${file-} ${exist-}
 
 grepcount:
@@ -132,47 +170,79 @@ grepcount:
         desc: |
             Grep a file against pattern and expect the given count to match.
     _env:
+        - pattern:
+            title: Pattern
+        - file:
+            title: File
+        - count:
+            title: Count
+        - operator:
+            title: Operator
         - RUN: FILE_GREP -- "${pattern-}" ${file-} ${count-} ${operator-}
 
 grep:
     _info:
         title: Grep pattern
     _env:
+        - pattern:
+            title: Pattern
+        - file:
+            title: File
         - RUN: FILE_GREP -- "${pattern-}" ${file-}
 
 sed:
     _info:
         title: Sed a pattern in place
     _env:
+        - pattern:
+            title: Pattern
+        - file:
+            title: File
         - RUN: FILE_SED -- "${pattern-}" ${file-}
 
 appendrow:
     _info:
         title: Append row to file
     _env:
+        - row:
+            title: Row
+        - file:
+            title: File
         - RUN: FILE_APPEND_ROW -- "${row-}" ${file-}
 
 pipewrite:
     _info:
         title: Write to a file from stdin
     _env:
+        - file:
+            title: File to write to.
         - RUN: FILE_PIPE_WRITE -- ${file-}
 
 pipeappend:
     _info:
         title: Append to a file from stdin
     _env:
+        - file:
+            title: File to write to.
         - RUN: FILE_PIPE_APPEND -- ${file-}
 
 getpermissions:
     _info:
         title: Get recursive list of permissions
     _env:
+        - dir:
+            title: Directory
+        - maxdepth:
+            title: Max depth
         - RUN: FILE_GET_PERMISSIONS -- ${dir-} ${maxdepth-}
 
 restorepermissions:
     _info:
         title: Restore list of permissions
     _env:
+        - dir:
+            title: Directory
+        - permissions:
+            title: Permissions
         - RUN: FILE_RESTORE_PERMISSIONS -- ${dir-} "${permissions-}"
 ...
