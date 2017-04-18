@@ -48,7 +48,7 @@ FILE_DEP_INSTALL()
 #=============
 FILE_RMRF()
 {
-    SPACE_SIGNATURE="dir [dir]"
+    SPACE_SIGNATURE="dir:1 [dir]"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -80,7 +80,7 @@ FILE_RMRF()
 #=============
 FILE_MKDIRP()
 {
-    SPACE_SIGNATURE="dir [dir]"
+    SPACE_SIGNATURE="dir:1 [dir]"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -113,7 +113,7 @@ FILE_MKDIRP()
 #=============
 FILE_CHMOD()
 {
-    SPACE_SIGNATURE="permissions file"
+    SPACE_SIGNATURE="permissions:1 file:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -134,6 +134,42 @@ FILE_CHMOD()
 }
 
 #=============
+# FILE_CHOWN
+#
+# Change file owner
+#
+# Parameters:
+#   $1: owner name
+#   $2: file path
+#
+# Returns:
+#   0: success
+#   1: failed to change owner
+#
+#=============
+FILE_CHOWN()
+{
+    SPACE_SIGNATURE="owner:1 file:1"
+    SPACE_DEP="PRINT"
+    SPACE_ENV="SUDO=${SUDO-}"
+
+    local owner="${1}"
+    shift
+
+    local file="${1}"
+    shift
+
+    PRINT "chown ${file} to ${owner}." "debug"
+
+    local SUDO="${SUDO-}"
+    ${SUDO} chown "${owner}" "${file}"
+    if [ "$?" -gt 0 ]; then
+        PRINT "Could not chown  ${file} to ${owner}." "error"
+        return 1
+    fi
+}
+
+#=============
 # FILE_CHOWNR
 #
 # Recursively change directory owner
@@ -149,7 +185,7 @@ FILE_CHMOD()
 #=============
 FILE_CHOWNR()
 {
-    SPACE_SIGNATURE="owner dir"
+    SPACE_SIGNATURE="owner:1 dir:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -184,7 +220,7 @@ FILE_CHOWNR()
 #=============
 FILE_DIREXIST()
 {
-    SPACE_SIGNATURE="dir [dir]"
+    SPACE_SIGNATURE="dir:1 [dir]"
     SPACE_DEP="PRINT"
 
     local dir="$*"
@@ -216,7 +252,7 @@ FILE_DIREXIST()
 #=============
 FILE_DIRNOTEXIST()
 {
-    SPACE_SIGNATURE="dir [dir]"
+    SPACE_SIGNATURE="dir:1 [dir]"
     SPACE_DEP="PRINT"
 
     local dir="$*"
@@ -248,7 +284,7 @@ FILE_DIRNOTEXIST()
 #=============
 FILE_EXIST()
 {
-    SPACE_SIGNATURE="file [file]"
+    SPACE_SIGNATURE="file:1 [file]"
     SPACE_DEP="PRINT"
 
     local file="$*"
@@ -280,7 +316,7 @@ FILE_EXIST()
 #=============
 FILE_NOT_EXIST()
 {
-    SPACE_SIGNATURE="file [file]"
+    SPACE_SIGNATURE="file:1 [file]"
     SPACE_DEP="PRINT"
 
     local file="$*"
@@ -312,7 +348,7 @@ FILE_NOT_EXIST()
 #=============
 FILE_TOUCH()
 {
-    SPACE_SIGNATURE="file [file]"
+    SPACE_SIGNATURE="file:1 [file]"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -343,7 +379,7 @@ FILE_TOUCH()
 #=============
 FILE_CAT()
 {
-    SPACE_SIGNATURE="file [file]"
+    SPACE_SIGNATURE="file:1 [file]"
 
     cat "$@"
 }
@@ -382,7 +418,7 @@ FILE_LS()
 #=============
 FILE_CP()
 {
-    SPACE_SIGNATURE="src dest"
+    SPACE_SIGNATURE="src:1 dest:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -420,7 +456,7 @@ FILE_CP()
 #=============
 FILE_ROW_EXIST()
 {
-    SPACE_SIGNATURE="row file [exist]"
+    SPACE_SIGNATURE="row:1 file:1 [exist]"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -471,7 +507,7 @@ FILE_ROW_EXIST()
 #=============
 FILE_ROW_PERSIST()
 {
-    SPACE_SIGNATURE="row file"
+    SPACE_SIGNATURE="row:1 file:1"
     SPACE_DEP="PRINT FILE_APPEND_ROW"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -517,7 +553,7 @@ FILE_ROW_PERSIST()
 #=============
 FILE_GREP()
 {
-    SPACE_SIGNATURE="pattern file [count operator]"
+    SPACE_SIGNATURE="pattern:1 file:1 [count operator]"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -588,7 +624,7 @@ FILE_GREP()
 #=============
 FILE_SED()
 {
-    SPACE_SIGNATURE="pattern file"
+    SPACE_SIGNATURE="pattern:1 file:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -630,7 +666,7 @@ FILE_SED()
 #=============
 FILE_APPEND_ROW()
 {
-    SPACE_SIGNATURE="row file"
+    SPACE_SIGNATURE="row:1 file:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -679,7 +715,7 @@ FILE_APPEND_ROW()
 #=============
 FILE_PIPE_WRITE()
 {
-    SPACE_SIGNATURE="file"
+    SPACE_SIGNATURE="file:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -711,7 +747,7 @@ FILE_PIPE_WRITE()
 #=============
 FILE_PIPE_APPEND()
 {
-    SPACE_SIGNATURE="file"
+    SPACE_SIGNATURE="file:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -743,7 +779,7 @@ FILE_PIPE_APPEND()
 #=============
 FILE_GET_PERMISSIONS()
 {
-    SPACE_SIGNATURE="dir [maxdepth]"
+    SPACE_SIGNATURE="dir:1 [maxdepth]"
     SPACE_ENV="SUDO=${SUDO-}"
     SPACE_DEP="PRINT"
 
@@ -776,7 +812,7 @@ FILE_GET_PERMISSIONS()
 FILE_RESTORE_PERMISSIONS()
 {
     # shellcheck disable=2034
-    SPACE_SIGNATURE="dir permissions"
+    SPACE_SIGNATURE="dir:1 permissions:1"
     # shellcheck disable=2034
     SPACE_ENV="SUDO=${SUDO-}"
     # shellcheck disable=2034

@@ -23,17 +23,17 @@ _dep_install:
 _info:
     title: File module
     desc: |
-        Handles all file operations, including creating, searching, setting permissions and removing files.
+        Handles file operations, including creating, searching, setting permissions and removing files.
 
 rmrf:
     _info:
-        title: Recursively remove a directory path
+        title: Recursively remove a directory
         desc: |
             rm -rf a directory.
     _env:
         - dir:
             title: Directory to remove recursively
-        - RUN: FILE_RMRF -- ${dir-}
+        - RUN: FILE_RMRF -- "${dir}"
 
 mkdirp:
     _info:
@@ -43,7 +43,7 @@ mkdirp:
     _env:
         - dir:
             title: Directory to create
-        - RUN: FILE_MKDIRP -- ${dir-}
+        - RUN: FILE_MKDIRP -- "${dir}"
 
 chmod:
     _info:
@@ -55,7 +55,7 @@ chmod:
             title: Permissions
         - file:
             title: File
-        - RUN: FILE_CHMOD -- ${permissions-} ${file-}
+        - RUN: FILE_CHMOD -- "${permissions}" "${file}"
 
 chownr:
     _info:
@@ -67,7 +67,7 @@ chownr:
             title: Owner
         - dir:
             title: Directory
-        - RUN: FILE_CHOWNR -- ${owner-} ${dir-}
+        - RUN: FILE_CHOWNR -- "${owner}" "${dir}"
 
 direxist:
     _info:
@@ -75,7 +75,7 @@ direxist:
     _env:
         - dir:
             title: Directory
-        - RUN: FILE_DIREXIST -- ${dir-}
+        - RUN: FILE_DIREXIST -- "${dir}"
 
 dirnotexist:
     _info:
@@ -83,7 +83,7 @@ dirnotexist:
     _env:
         - dir:
             title: Directory
-        - RUN: FILE_DIRNOTEXIST -- ${dir-}
+        - RUN: FILE_DIRNOTEXIST -- "${dir}"
 
 fileexist:
     _info:
@@ -91,7 +91,7 @@ fileexist:
     _env:
         - file:
             title: File
-        - RUN: FILE_EXIST -- ${file-}
+        - RUN: FILE_EXIST -- "${file}"
 
 filenotexist:
     _info:
@@ -99,7 +99,7 @@ filenotexist:
     _env:
         - file:
             title: File
-        - RUN: FILE_NOT_EXIST -- ${file-}
+        - RUN: FILE_NOT_EXIST -- "${file}"
 
 touch:
     _info:
@@ -107,7 +107,7 @@ touch:
     _env:
         - file:
             title: File
-        - RUN: FILE_TOUCH -- ${file-}
+        - RUN: FILE_TOUCH -- "${file}"
 
 cat:
     _info:
@@ -117,7 +117,7 @@ cat:
     _env:
         - file:
             title: File
-        - RUN: FILE_CAT -- ${file-}
+        - RUN: FILE_CAT -- "${file}"
 
 ls:
     _info:
@@ -127,7 +127,7 @@ ls:
     _env:
         - lsargs:
             title: args
-        - RUN: FILE_LS -- ${lsargs-}
+        - RUN: FILE_LS -- "${lsargs}"
 
 cp:
     _info:
@@ -139,7 +139,7 @@ cp:
             title: Source
         - dest:
             title: Destination
-        - RUN: FILE_CP -- ${src-} ${dest-}
+        - RUN: FILE_CP -- "${src}" "${dest}"
 
 rowpersist:
     _info:
@@ -149,7 +149,7 @@ rowpersist:
             title: Row
         - file:
             title: File
-        - RUN: FILE_ROW_PERSIST -- "${row-}" ${file-}
+        - RUN: FILE_ROW_PERSIST -- "${row}" "${file}"
 
 rowexist:
     _info:
@@ -162,7 +162,7 @@ rowexist:
         - exist:
             title: Exists or not, default 1.
             value: ${exist:-1}
-        - RUN: FILE_ROW_EXIST -- "${row-}" ${file-} ${exist-}
+        - RUN: FILE_ROW_EXIST -- "${row}" "${file}" "${exist}"
 
 grepcount:
     _info:
@@ -178,7 +178,7 @@ grepcount:
             title: Count
         - operator:
             title: Operator
-        - RUN: FILE_GREP -- "${pattern-}" ${file-} ${count-} ${operator-}
+        - RUN: FILE_GREP -- "${pattern}" "${file}" "${count}" "${operator}"
 
 grep:
     _info:
@@ -188,7 +188,7 @@ grep:
             title: Pattern
         - file:
             title: File
-        - RUN: FILE_GREP -- "${pattern-}" ${file-}
+        - RUN: FILE_GREP -- "${pattern}" "${file}"
 
 sed:
     _info:
@@ -198,7 +198,7 @@ sed:
             title: Pattern
         - file:
             title: File
-        - RUN: FILE_SED -- "${pattern-}" ${file-}
+        - RUN: FILE_SED -- "${pattern}" "${file}"
 
 appendrow:
     _info:
@@ -208,7 +208,7 @@ appendrow:
             title: Row
         - file:
             title: File
-        - RUN: FILE_APPEND_ROW -- "${row-}" ${file-}
+        - RUN: FILE_APPEND_ROW -- "${row}" "${file}"
 
 pipewrite:
     _info:
@@ -216,7 +216,7 @@ pipewrite:
     _env:
         - file:
             title: File to write to.
-        - RUN: FILE_PIPE_WRITE -- ${file-}
+        - RUN: FILE_PIPE_WRITE -- "${file}"
 
 pipeappend:
     _info:
@@ -224,7 +224,7 @@ pipeappend:
     _env:
         - file:
             title: File to write to.
-        - RUN: FILE_PIPE_APPEND -- ${file-}
+        - RUN: FILE_PIPE_APPEND -- "${file}"
 
 getpermissions:
     _info:
@@ -234,7 +234,7 @@ getpermissions:
             title: Directory
         - maxdepth:
             title: Max depth
-        - RUN: FILE_GET_PERMISSIONS -- ${dir-} ${maxdepth-}
+        - RUN: FILE_GET_PERMISSIONS -- "${dir}" "${maxdepth}"
 
 restorepermissions:
     _info:
@@ -244,5 +244,5 @@ restorepermissions:
             title: Directory
         - permissions:
             title: Permissions
-        - RUN: FILE_RESTORE_PERMISSIONS -- ${dir-} "${permissions-}"
+        - RUN: FILE_RESTORE_PERMISSIONS -- "${dir}" "${permissions}"
 ...
