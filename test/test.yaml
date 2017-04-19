@@ -44,7 +44,7 @@ _tests:
             _env:
                 - row: "#spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
                 - file: /etc/passwd
-                - exist: 0
+                - invert: 1
             @include: @{DIR}/../Spacefile.yaml|/rowexist/
             _info:
                 title: Check so that "spacegal" row does not already exist in /etc/passwd.
@@ -94,7 +94,6 @@ _tests:
             _env:
                 - row: "Another row."
                 - file: /etc/passwd
-                - exist: 1
             @include: @{DIR}/../Spacefile.yaml|/rowexist/
             _info:
                 title: Check so that a row from file.txt exist in /etc/passwd.
@@ -102,7 +101,7 @@ _tests:
             _env:
                 - row: "spacegal:x:333:333:SpaceGal:/home/spacegal:/bin/false"
                 - file: /etc/passwd
-                - exist: 0
+                - invert: 1
             @include: @{DIR}/../Spacefile.yaml|/rowexist/
             _info:
                 title: Check so that the "spacegal" user (row) does not exist anymore in /etc/passwd.
@@ -117,7 +116,6 @@ _tests:
             _env:
                 - row: "Another row."
                 - file: /etc/passwd
-                - exist: 1
             @include: @{DIR}/../Spacefile.yaml|/rowexist/
             _info:
                 title: Check so that a row from file.txt exist in /etc/passwd.
@@ -125,7 +123,6 @@ _tests:
             _env:
                 - row: "Totally new row."
                 - file: /etc/passwd
-                - exist: 1
             @include: @{DIR}/../Spacefile.yaml|/rowexist/
             _info:
                 title: Check so that a row from file2.txt exist in /etc/passwd.
@@ -193,20 +190,20 @@ _tests:
         -
             _env:
                 - owner: :root
-                - dir: /root/some_new_dir
+                - file: /root/some_new_dir
             @include: @{DIR}/../Spacefile.yaml|/chownr/
             _info:
                 title: Reset ownership on newly created directory
         -
             _env:
-                - dir: /root/some_new_dir
+                - file: /root/some_new_dir
                 - maxdepth: 1
             @include: @{DIR}/../Spacefile.yaml|/getpermissions/
             _info:
                 title: Get permissions list
         -
             _env:
-                - dir: /root/some_new_dir
+                - file: /root/some_new_dir
             @include: @{DIR}/../Spacefile.yaml|/rmrf/
             _info:
                 title: Remove the directory we had just created

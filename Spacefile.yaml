@@ -26,14 +26,24 @@ _info:
         Handles file operations, including creating, searching, setting permissions and removing files.
 
 rmrf:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
-        title: Recursively remove a directory
+        title: Forcefullyremove a file or directory recursively
         desc: |
             rm -rf a directory.
     _env:
-        - dir:
-            title: Directory to remove recursively
-        - RUN: FILE_RMRF -- "${dir}"
+        - file:
+            title: File or directory to remove recursively
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File or directory to remove recursively
+                    completion: @{prefix}_list_files/
+                    completion_cache: 1
+        - RUN: FILE_RMRF -- "${file}"
 
 mkdirp:
     _info:
@@ -43,62 +53,128 @@ mkdirp:
     _env:
         - dir:
             title: Directory to create
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Directory to create
+                    values:
+                        - dir
         - RUN: FILE_MKDIRP -- "${dir}"
 
 chmod:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Set file permissions
         desc: |
-            chmod file.
+            chmod file or directory.
     _env:
         - permissions:
             title: Permissions
         - file:
             title: File
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Permissions
+                    values:
+                        - permissions
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
         - RUN: FILE_CHMOD -- "${permissions}" "${file}"
 
 chownr:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
-        title: Change owner
+        title: Change owner recursively
         desc: |
             chown -r directory.
     _env:
         - owner:
             title: Owner
-        - dir:
-            title: Directory
-        - RUN: FILE_CHOWNR -- "${owner}" "${dir}"
+        - file:
+            title: File or directory
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Owner
+                    values:
+                        - owner
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
+        - RUN: FILE_CHOWNR -- "${owner}" "${file}"
 
 direxist:
     _info:
-        title: Check if directory path exists
+        title: Check so a directory path does exist
+        desc: |
+            If the directory does not exist exit with error.
     _env:
         - dir:
             title: Directory
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Directory
+                    values:
+                        - dir
         - RUN: FILE_DIREXIST -- "${dir}"
 
 dirnotexist:
     _info:
-        title: Check if directory path does not exist
+        title: Check so that a directory path does not exist
+        desc: |
+            If the directory does exist exit with error.
     _env:
         - dir:
             title: Directory
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Directory
+                    values:
+                        - dir
         - RUN: FILE_DIRNOTEXIST -- "${dir}"
 
 fileexist:
     _info:
-        title: Check if a file path exists
+        title: Check so a file path does exist
+        desc: |
+            If the file does not exist exit with error.
     _env:
         - file:
             title: File
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    values:
+                        - file
         - RUN: FILE_EXIST -- "${file}"
 
 filenotexist:
     _info:
-        title: Check if a file path does not exist
+        title: Check so a file path does not exist
+        desc: |
+            If the file does exist exit with error.
     _env:
         - file:
             title: File
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    values:
+                        - file
         - RUN: FILE_NOT_EXIST -- "${file}"
 
 touch:
@@ -107,9 +183,17 @@ touch:
     _env:
         - file:
             title: File
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    values:
+                        - file
         - RUN: FILE_TOUCH -- "${file}"
 
 cat:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Cat a file
         desc: |
@@ -117,6 +201,14 @@ cat:
     _env:
         - file:
             title: File
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    completion: @{prefix}_list_files/
+                    completion_cache: 1
         - RUN: FILE_CAT -- "${file}"
 
 ls:
@@ -134,63 +226,177 @@ cp:
         title: Copy a file
         desc: |
             Copies a file within same system.
+            This does not copy file from or to a
+            remote system, use /cat/ and /pipewrite/
+            for that.
     _env:
         - src:
             title: Source
+            completion: G
         - dest:
             title: Destination
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Source file
+                    completion: G
+                -
+                    title: Destination file
+                    values:
+                        - destfile
         - RUN: FILE_CP -- "${src}" "${dest}"
 
 rowpersist:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
-        title: Make sure a specific row exists in a file
+        title: Make sure that a specific row exists in a file
+        desc: |
+            Look in the file if the row does already exist,
+            if not append it to the file.
     _env:
         - row:
             title: Row
         - file:
             title: File
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Row
+                    values:
+                        - row
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
         - RUN: FILE_ROW_PERSIST -- "${row}" "${file}"
 
 rowexist:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
-        title: Check if a row exists or not in file
+        title: Check if a row exists in a file
+        desc: |
+            Look in the file and see if the row exists there,
+            if not exit with error.
+            Set exist to 0 to invert the exit status.
     _env:
         - row:
             title: Row
         - file:
             title: File
-        - exist:
-            title: Exists or not, default 1.
-            value: ${exist:-1}
-        - RUN: FILE_ROW_EXIST -- "${row}" "${file}" "${exist}"
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - invert:
+            title: Set to invert exit status
+            value: ${invert:-0}
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Row
+                    values:
+                        - row
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
+                -
+                    title: Invert
+                    values:
+                        - 0
+                        - 1
+        - RUN: FILE_ROW_EXIST -- "${row}" "${file}" "${invert}"
 
 grepcount:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Grep and match count
         desc: |
-            Grep a file against pattern and expect the given count to match.
+            Grep a file against pattern and expect the given count
+            to match by an operator or else exit with error, as:
+                matched -operator count
     _env:
         - pattern:
             title: Pattern
         - file:
             title: File
+            completion: @{prefix}_list_files/
+            completion_cache: 1
         - count:
             title: Count
+            value: ${count:-1}
+            values:
+                - 0
+                - 1
+                - 2
+                - 3
         - operator:
             title: Operator
+            values:
+                - eq
+                - ne
+                - gt
+                - ge
+                - le
+                - lt
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Pattern
+                    values:
+                        - pattern
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
+                -
+                    title: Count
+                    values:
+                        - 0
+                        - 1
+                        - 2
+                        - 3
+                -
+                    title: Operator
+                    values:
+                        - eq
+                        - ne
+                        - gt
+                        - ge
+                        - le
+                        - lt
         - RUN: FILE_GREP -- "${pattern}" "${file}" "${count}" "${operator}"
 
 grep:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
-        title: Grep pattern
+        title: Grep file for pattern
     _env:
         - pattern:
             title: Pattern
         - file:
             title: File
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Pattern
+                    values:
+                        - pattern
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
         - RUN: FILE_GREP -- "${pattern}" "${file}"
 
 sed:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Sed a pattern in place
     _env:
@@ -198,9 +404,23 @@ sed:
             title: Pattern
         - file:
             title: File
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Pattern
+                    values:
+                        - pattern
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
         - RUN: FILE_SED -- "${pattern}" "${file}"
 
 appendrow:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Append row to file
     _env:
@@ -208,41 +428,126 @@ appendrow:
             title: Row
         - file:
             title: File
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: Row
+                    values:
+                        - row
+                -
+                    title: File
+                    completion: @{prefix}_list_files2/
+                    completion_cache: 1
         - RUN: FILE_APPEND_ROW -- "${row}" "${file}"
 
 pipewrite:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
-        title: Write to a file from stdin
+        title: Write data to file read from stdin
     _env:
         - file:
-            title: File to write to.
+            title: File to write to
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    completion: @{prefix}_list_files/
+                    completion_cache: 1
         - RUN: FILE_PIPE_WRITE -- "${file}"
 
 pipeappend:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Append to a file from stdin
     _env:
         - file:
-            title: File to write to.
+            title: File to append to
+            completion: @{prefix}_list_files/
+            completion_cache: 1
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    completion: @{prefix}_list_files/
+                    completion_cache: 1
         - RUN: FILE_PIPE_APPEND -- "${file}"
 
 getpermissions:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Get recursive list of permissions
     _env:
-        - dir:
-            title: Directory
+        - file:
+            title: File or directory
+            completion: @{prefix}_list_files/
+            completion_cache: 1
         - maxdepth:
-            title: Max depth
-        - RUN: FILE_GET_PERMISSIONS -- "${dir}" "${maxdepth}"
+            title: Max depth to recurse, optional
+            values:
+                - 1
+                - 2
+                - 3
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    completion: @{prefix}_list_files/
+                    completion_cache: 1
+                -
+                    title: Max depth to recurse, optional
+                    values:
+                        - 1
+                        - 2
+                        - 3
+        - RUN: FILE_GET_PERMISSIONS -- "${file}" "${maxdepth}"
 
 restorepermissions:
+    @prefix: @{PARENTPATH}
+    @dotdot: prefix
     _info:
         title: Restore list of permissions
+        desc: |
+            Take a string of permission retrieved from
+            /getpermissions/ and restore them from within
+            the base directory.
     _env:
-        - dir:
-            title: Directory
+        - file:
+            title: Base directory
+            completion: @{prefix}_list_files/
+            completion_cache: 1
         - permissions:
             title: Permissions
-        - RUN: FILE_RESTORE_PERMISSIONS -- "${dir}" "${permissions}"
+        - SPACE_ARGS:
+            arguments:
+                -
+                    title: File
+                    completion: @{prefix}_list_files/
+                    completion_cache: 1
+                -
+                    title: Permissions
+                    values:
+                        - longblobwithpermissions
+        - RUN: FILE_RESTORE_PERMISSIONS -- "${file}" "${permissions}"
+
+_list_files:
+    _env:
+        - RUN: _FILE_AC "0" -- "${file-}"
+        - SPACE_REDIR: "2>/dev/null"
+        - SPACE_MUTE_EXIT: 1
+        - SPACE_LOG_LEVEL: 0
+
+_list_files2:
+    # When positional argument is #2.
+    _env:
+        - RUN: _FILE_AC "1" --
+        - SPACE_REDIR: "2>/dev/null"
+        - SPACE_MUTE_EXIT: 1
+        - SPACE_LOG_LEVEL: 0
 ...

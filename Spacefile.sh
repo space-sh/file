@@ -48,19 +48,18 @@ FILE_DEP_INSTALL()
 #=============
 FILE_RMRF()
 {
-    SPACE_SIGNATURE="dir:1 [dir]"
+    SPACE_SIGNATURE="file:1 [file]"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
-    local dir="$*"
-    shift
+    local file="$*"
 
-    PRINT "Recursively force remove directory: ${dir}." "debug"
+    PRINT "Recursively force remove directory: ${file}." "debug"
 
     local SUDO="${SUDO-}"
-    ${SUDO} rm -rf ${dir}
+    ${SUDO} rm -rf ${file}
     if [ "$?" -gt 0 ]; then
-        PRINT "Could not remove directory: ${dir}." "error"
+        PRINT "Could not remove directory: ${file}." "error"
         return 1
     fi
 }
@@ -85,7 +84,6 @@ FILE_MKDIRP()
     SPACE_ENV="SUDO=${SUDO-}"
 
     local dir="$*"
-    shift
 
     local SUDO="${SUDO-}"
 
@@ -185,22 +183,22 @@ FILE_CHOWN()
 #=============
 FILE_CHOWNR()
 {
-    SPACE_SIGNATURE="owner:1 dir:1"
+    SPACE_SIGNATURE="owner:1 file:1"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
     local owner="${1}"
     shift
 
-    local dir="${1}"
+    local file="${1}"
     shift
 
-    PRINT "chown ${dir} to ${owner}." "debug"
+    PRINT "chown ${file} to ${owner}." "debug"
 
     local SUDO="${SUDO-}"
-    ${SUDO} chown -R "${owner}" "${dir}"
+    ${SUDO} chown -R "${owner}" "${file}"
     if [ "$?" -gt 0 ]; then
-        PRINT "Could not chown -R ${dir} to ${owner}." "error"
+        PRINT "Could not chown -R ${file} to ${owner}." "error"
         return 1
     fi
 }
@@ -400,7 +398,7 @@ FILE_LS()
 {
     SPACE_SIGNATURE="[lsargs]"
 
-    ls "$@"
+    ls $*
 }
 
 #=============
@@ -456,7 +454,7 @@ FILE_CP()
 #=============
 FILE_ROW_EXIST()
 {
-    SPACE_SIGNATURE="row:1 file:1 [exist]"
+    SPACE_SIGNATURE="row:1 file:1 [invert]"
     SPACE_DEP="PRINT"
     SPACE_ENV="SUDO=${SUDO-}"
 
@@ -466,10 +464,10 @@ FILE_ROW_EXIST()
     local file="${1}"
     shift
 
-    local exist="${1:-1}"
+    local invert="${1:-0}"
     shift $(( $# > 0 ? 1 : 0 ))
 
-    PRINT "Check if row exist in ${file}, ${row}, exist: ${exist}." "debug"
+    PRINT "Check if row exist in ${file}, ${row}, invert: ${invert}." "debug"
 
     local SUDO="${SUDO-}"
     ${SUDO} grep -q "^${row}\$" "${file}" 2>/dev/null
@@ -479,12 +477,12 @@ FILE_ROW_EXIST()
         return 2
     elif [ "${status}" = "1" ]; then
         PRINT "Row does not exist." "debug"
-        if [ "${exist}" = "1" ]; then
+        if [ "${invert}" = "0" ]; then
             return 1
         fi
     else
         PRINT "Row does exist." "debug"
-        if [ "${exist}" -eq 0 ]; then
+        if [ "${invert}" = "1" ]; then
             return 1
         fi
     fi
@@ -535,15 +533,15 @@ FILE_ROW_PERSIST()
 # FILE_GREP
 #
 # Grep on file.
-# Possibly require exact count matches.
-# Comparison operator could also be given,
-# default is "eq".
+# Possibly require exact count matches,
+# then also a comparison operator could be provided, default is "eq".
 #
 # Parameters:
 #   $1: pattern
 #   $2: file path
-#   $3: count to match. Default: ""
-#   $4: operator. Default: "eq"
+#   $3: count to match, if not provided then
+#       the matched rows are printed.
+#   $4: operator to compare count matches by. Default: "eq"
 #
 # Returns:
 #   0: success
@@ -598,11 +596,9 @@ FILE_GREP()
         # shell check can't parse this if statement because of the dynamic comparison operator.
         # shellcheck disable=SC1009
         if [ "${count2}" "-${operator}" "${count}" ]; then
-            printf "%s\n" "${tmp}"
             return 0
         else
             PRINT "Wrong count: got ${count2}, operator -${operator}, defined ${count}." "debug"
-            printf "%s\n" "${tmp}"
             return 1
         fi
     fi
@@ -771,7 +767,7 @@ FILE_PIPE_APPEND()
 # which could be stored and used later for restoring permissions.
 #
 # Parameters:
-#   $1: directory path
+#   $1: file or directory path
 #
 # Returns:
 #   Text output on stdout.
@@ -779,20 +775,20 @@ FILE_PIPE_APPEND()
 #=============
 FILE_GET_PERMISSIONS()
 {
-    SPACE_SIGNATURE="dir:1 [maxdepth]"
+    SPACE_SIGNATURE="file:1 [maxdepth]"
     SPACE_ENV="SUDO=${SUDO-}"
     SPACE_DEP="PRINT"
 
-    local dir="${1}"
+    local file="${1}"
     shift
 
     local maxdepth="${1:+-maxdepth ${1}}"
     shift $(( $# > 0 ? 1 : 0 ))
 
     local SUDO="${SUDO-}"
-    PRINT "Get all permissions for ${dir}, SUDO=${SUDO}." "debug"
+    PRINT "Get all permissions for ${file}, SUDO=${SUDO}." "debug"
     # shellcheck disable=2086
-    ${SUDO} find "${dir}" ${maxdepth} -exec stat -c"%n %a %U:%G" {} \;
+    ${SUDO} find "${file}" ${maxdepth} -exec stat -c"%n %a %U:%G" {} \;
 }
 
 #=============
@@ -801,7 +797,7 @@ FILE_GET_PERMISSIONS()
 # Restore permissions.
 #
 # Parameters:
-#   $1: directory path
+#   $1: base directory path
 #   $2: permissions
 #
 # Returns:
@@ -826,7 +822,13 @@ FILE_RESTORE_PERMISSIONS()
 
     local SUDO="${SUDO-}"
 
-    PRINT "Restore permissions for ${dir}, SUDO=${SUDO}." "debug"
+    PRINT "Restore permissions in ${dir}, SUDO=${SUDO}." "debug"
+
+    cd ${dir:-.}
+    if [ "$?" -gt 0 ]; then
+        PRINT "Could not change directory into ${dir}." "error"
+        return 1
+    fi
 
     local line=
     IFS="
@@ -847,4 +849,50 @@ FILE_RESTORE_PERMISSIONS()
             return 1
         fi
     done
+}
+
+#=============
+# _FILE_AC
+#
+# Helper function when using auto completion on files.
+#
+#=============
+_FILE_AC()
+{
+    SPACE_SIGNATURE="burn:1 [file]"
+
+    shift $((${1}+1))
+
+    local file="${1-}"
+    shift $(( $# > 0 ? 1 : 0 ))
+
+    local base=
+    if [ -z "${file}" ]; then
+        base="."
+    else
+        case "${file}" in
+            */)
+                base="${file}"
+            ;;
+            *)
+                base=$(dirname "${file}")
+            ;;
+        esac
+    fi
+
+    local list=
+    local item=
+    local count=0
+    list=$(find "${base}" -maxdepth 1 -wholename "${file}*")
+    for item in ${list}; do
+        count=$((count + 1))
+    done
+    if [ "${count}" -eq 1 ]; then
+        # Check if it is a directory we matched.
+        if [ -d "${list}" ]; then
+            printf "%s/\n" "${list}"
+            return
+        fi
+    fi
+    printf "%s\n" "${list}"
 }
