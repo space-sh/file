@@ -29,7 +29,7 @@ rmrf:
     @prefix: @{PARENTPATH}
     @dotdot: prefix
     _info:
-        title: Forcefullyremove a file or directory recursively
+        title: Forcefully remove a file or directory recursively
         desc: |
             rm -rf a directory.
     _env:
@@ -117,7 +117,7 @@ direxist:
     _info:
         title: Check so a directory path does exist
         desc: |
-            If the directory does not exist exit with error.
+            If the directory does not exist, exit with error.
     _env:
         - dir:
             title: Directory
@@ -133,7 +133,7 @@ dirnotexist:
     _info:
         title: Check so that a directory path does not exist
         desc: |
-            If the directory does exist exit with error.
+            If the directory does exist, exit with error.
     _env:
         - dir:
             title: Directory
@@ -149,7 +149,7 @@ fileexist:
     _info:
         title: Check so a file path does exist
         desc: |
-            If the file does not exist exit with error.
+            If the file does not exist, exit with error.
     _env:
         - file:
             title: File
@@ -165,7 +165,7 @@ filenotexist:
     _info:
         title: Check so a file path does not exist
         desc: |
-            If the file does exist exit with error.
+            If the file does exist, exit with error.
     _env:
         - file:
             title: File
