@@ -1,6 +1,6 @@
 # File module | [![build status](https://gitlab.com/space-sh/file/badges/master/build.svg)](https://gitlab.com/space-sh/file/commits/master)
 
-Handles all file operations, including creating, searching, setting permissions and removing files.
+Handles file operations, including creating, searching, setting permissions and removing files.
 
 
 
@@ -18,12 +18,12 @@ Handles all file operations, including creating, searching, setting permissions 
 ## /chmod/
 	Set file permissions
 
-	chmod file.
+	chmod file or directory.
 	
 
 
 ## /chownr/
-	Change owner
+	Change owner recursively
 
 	chown -r directory.
 	
@@ -33,23 +33,38 @@ Handles all file operations, including creating, searching, setting permissions 
 	Copy a file
 
 	Copies a file within same system.
+	This does not copy file from or to a
+	remote system, use /cat/ and /pipewrite/
+	for that.
 	
 
 
 ## /direxist/
-	Check if directory path exists
+	Check so a directory path does exist
+
+	If the directory does not exist, exit with error.
+	
 
 
 ## /dirnotexist/
-	Check if directory path does not exist
+	Check so that a directory path does not exist
+
+	If the directory does exist, exit with error.
+	
 
 
 ## /fileexist/
-	Check if a file path exists
+	Check so a file path does exist
+
+	If the file does not exist, exit with error.
+	
 
 
 ## /filenotexist/
-	Check if a file path does not exist
+	Check so a file path does not exist
+
+	If the file does exist, exit with error.
+	
 
 
 ## /getpermissions/
@@ -57,13 +72,15 @@ Handles all file operations, including creating, searching, setting permissions 
 
 
 ## /grep/
-	Grep pattern
+	Grep file for pattern
 
 
 ## /grepcount/
 	Grep and match count
 
-	Grep a file against pattern and expect the given count to match.
+	Grep a file against pattern and expect the given count
+	to match by an operator or else exit with error, as:
+	    matched -operator count
 	
 
 
@@ -86,28 +103,39 @@ Handles all file operations, including creating, searching, setting permissions 
 
 
 ## /pipewrite/
-	Write to a file from stdin
+	Write data to file read from stdin
 
 
 ## /restorepermissions/
 	Restore list of permissions
 
+	Take a string of permission retrieved from
+	/getpermissions/ and restore them from within
+	the base directory.
+	
+
 
 ## /rmrf/
-	Recursively remove a directory path
+	Forcefully remove a file or directory recursively
 
 	rm -rf a directory.
 	
 
 
 ## /rowexist/
-	Check if a row exists or not in file
+	Check if a row exists in a file
+
+	Look in the file and see if the row exists there,
+	if not exit with error.
+	Set exist to 0 to invert the exit status.
+	
 
 
 ## /rowpersist/
-	Check if row exists in file
+	Make sure that a specific row exists in a file
 
-	Make sure row exists.
+	Look in the file if the row does already exist,
+	if not append it to the file.
 	
 
 
@@ -175,6 +203,22 @@ Set file permissions
 ### Returns:  
 - 0: success  
 - 1: failed to set permissions  
+  
+  
+  
+## FILE\_CHOWN()  
+  
+  
+  
+Change file owner  
+  
+### Parameters:  
+- $1: owner name  
+- $2: file path  
+  
+### Returns:  
+- 0: success  
+- 1: failed to change owner  
   
   
   
@@ -352,15 +396,15 @@ creates the file if it's missing.
   
   
 Grep on file.  
-Possibly require exact count matches.  
-Comparison operator could also be given,  
-default is "eq".  
+Possibly require exact count matches,  
+then also a comparison operator could be provided, default is "eq".  
   
 ### Parameters:  
 - $1: pattern  
 - $2: file path  
-- $3: count to match. Default: ""  
-- $4: operator. Default: "eq"  
+- $3: count to match, if not provided then  
+- the matched rows are printed.  
+- $4: operator to compare count matches by. Default: "eq"  
   
 ### Returns:  
 - 0: success  
@@ -439,7 +483,7 @@ Get a list of directory and file permissions
 which could be stored and used later for restoring permissions.  
   
 ### Parameters:  
-- $1: directory path  
+- $1: file or directory path  
   
 ### Returns:  
 - Text output on stdout.  
@@ -453,12 +497,20 @@ which could be stored and used later for restoring permissions.
 Restore permissions.  
   
 ### Parameters:  
-- $1: directory path  
+- $1: base directory path  
 - $2: permissions  
   
 ### Returns:  
 - 0: success  
 - 1: failed to chown or failed to chmod  
+  
+  
+  
+## \_FILE\_AC()  
+  
+  
+  
+Helper function when using auto completion on files.  
   
   
   
