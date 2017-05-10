@@ -50,14 +50,12 @@ FILE_RMRF()
 {
     SPACE_SIGNATURE="file:1 [file]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local file="$*"
 
     PRINT "Recursively force remove directory: ${file}." "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} rm -rf ${file}
+    rm -rf ${file}
     if [ "$?" -gt 0 ]; then
         PRINT "Could not remove directory: ${file}." "error"
         return 1
@@ -81,14 +79,11 @@ FILE_MKDIRP()
 {
     SPACE_SIGNATURE="dir:1 [dir]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local dir="$*"
 
-    local SUDO="${SUDO-}"
-
     PRINT "Creating directories: ${dir}." "debug"
-    ${SUDO} mkdir -p ${dir}
+    mkdir -p ${dir}
     if [ "$?" -gt 0 ]; then
         PRINT "Could not create directory: ${dir}." "error"
         return 1
@@ -113,7 +108,6 @@ FILE_CHMOD()
 {
     SPACE_SIGNATURE="permissions:1 file:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local octets="${1}"
     shift
@@ -123,8 +117,7 @@ FILE_CHMOD()
 
     PRINT "chmod ${file} to ${octets}." "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} chmod "${octets}" "${file}"
+    chmod "${octets}" "${file}"
     if [ "$?" -gt 0 ]; then
         PRINT "Could not chmod ${file} to ${octets}." "error"
         return 1
@@ -149,7 +142,6 @@ FILE_CHOWN()
 {
     SPACE_SIGNATURE="owner:1 file:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local owner="${1}"
     shift
@@ -159,8 +151,7 @@ FILE_CHOWN()
 
     PRINT "chown ${file} to ${owner}." "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} chown "${owner}" "${file}"
+    chown "${owner}" "${file}"
     if [ "$?" -gt 0 ]; then
         PRINT "Could not chown  ${file} to ${owner}." "error"
         return 1
@@ -185,7 +176,6 @@ FILE_CHOWNR()
 {
     SPACE_SIGNATURE="owner:1 file:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local owner="${1}"
     shift
@@ -195,8 +185,7 @@ FILE_CHOWNR()
 
     PRINT "chown ${file} to ${owner}." "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} chown -R "${owner}" "${file}"
+    chown -R "${owner}" "${file}"
     if [ "$?" -gt 0 ]; then
         PRINT "Could not chown -R ${file} to ${owner}." "error"
         return 1
@@ -348,15 +337,13 @@ FILE_TOUCH()
 {
     SPACE_SIGNATURE="file:1 [file]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local file="$*"
     shift
 
     PRINT "Touch file(s): ${file}" "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} touch ${file}
+    touch ${file}
     if [ "$?" -gt 0 ]; then
         PRINT "Could not touch file(s): ${file}." "error"
         return 1
@@ -418,7 +405,6 @@ FILE_CP()
 {
     SPACE_SIGNATURE="src:1 dest:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local src="${1}"
     shift
@@ -428,8 +414,7 @@ FILE_CP()
 
     PRINT "Copy file: ${src} ${dest}" "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} cp "${src}" "${dest}"
+    cp "${src}" "${dest}"
     if [ "$?" -gt 0 ]; then
         PRINT "Could not copy from ${src} to ${dest}." "error"
         return 1
@@ -456,7 +441,6 @@ FILE_ROW_EXIST()
 {
     SPACE_SIGNATURE="row:1 file:1 [invert]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local row="${1}"
     shift
@@ -469,8 +453,7 @@ FILE_ROW_EXIST()
 
     PRINT "Check if row exist in ${file}, ${row}, invert: ${invert}." "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} grep -q "^${row}\$" "${file}" 2>/dev/null
+    grep -q "^${row}\$" "${file}" 2>/dev/null
     local status="$?"
     if [ "${status}" = "2" ]; then
         PRINT "File not found: ${file}." "error"
@@ -507,7 +490,6 @@ FILE_ROW_PERSIST()
 {
     SPACE_SIGNATURE="row:1 file:1"
     SPACE_DEP="PRINT FILE_APPEND_ROW"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local row="${1}"
     shift
@@ -517,8 +499,7 @@ FILE_ROW_PERSIST()
 
     PRINT "Make sure that row exist in ${file}: ${row}" "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} grep -q "^${row}\$" "${file}" 2>/dev/null
+    grep -q "^${row}\$" "${file}" 2>/dev/null
     local status="$?"
     if [ "${status}" = "2" ]; then
         PRINT "File not found: ${file}, create it and add row." "debug"
@@ -553,7 +534,6 @@ FILE_GREP()
 {
     SPACE_SIGNATURE="pattern:1 file:1 [count operator]"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local pattern="${1}"
     shift
@@ -569,9 +549,8 @@ FILE_GREP()
 
     PRINT "Grep on ${file}: ${pattern}" "debug"
 
-    local SUDO="${SUDO-}"
     local tmp=
-    tmp="$(${SUDO} grep "${pattern}" "${file}" 2>/dev/null)"
+    tmp="$(grep "${pattern}" "${file}" 2>/dev/null)"
     local status="$?"
     if [ "${status}" = "2" ]; then
         PRINT "File not found: ${file}." "error"
@@ -622,7 +601,6 @@ FILE_SED()
 {
     SPACE_SIGNATURE="pattern:1 file:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local pattern="${1}"
     shift
@@ -632,14 +610,13 @@ FILE_SED()
 
     PRINT "Sed on ${file}: ${pattern}" "debug"
 
-    local SUDO="${SUDO-}"
     local tmp=
-    tmp="$(${SUDO} sed "${pattern}" "${file}")"
+    tmp="$(sed "${pattern}" "${file}")"
     if [ "$?" -gt 0 ]; then
         PRINT "Could not sed ${file}." "error"
         return 1
     fi
-    printf "%s\n" "${tmp}" | ${SUDO} tee "${file}" >/dev/null
+    printf "%s\n" "${tmp}" | tee "${file}" >/dev/null
     if [ "$?" -gt 0 ]; then
         PRINT "Could not write to ${file}." "error"
         return 1
@@ -664,7 +641,6 @@ FILE_APPEND_ROW()
 {
     SPACE_SIGNATURE="row:1 file:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local data="${1}"
     shift
@@ -674,8 +650,6 @@ FILE_APPEND_ROW()
 
     PRINT "Append row to ${file}." "debug"
 
-    local SUDO="${SUDO-}"
-
     # We want to make sure that the last byte before the append, if any,
     # is a newline character.
     local newline=""
@@ -683,13 +657,13 @@ FILE_APPEND_ROW()
         local cr="
 "
         local char=
-        char="$(${SUDO} tail -c -1 ${file})"
+        char="$(tail -c -1 ${file})"
         if [ "${char}" != "" ] && [ "${char}" != "${cr}" ]; then
             newline="${cr}"
         fi
     fi
 
-    ${SUDO} printf "%s\n" "${newline}${data}" | ${SUDO} tee -a "${file}" >/dev/null
+    printf "%s\n" "${newline}${data}" | tee -a "${file}" >/dev/null
     if [ "$?" -gt 0 ]; then
         PRINT "Could not write to ${file}." "error"
         return 1
@@ -713,15 +687,13 @@ FILE_PIPE_WRITE()
 {
     SPACE_SIGNATURE="file:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local file="${1}"
     shift
 
     PRINT "pipe stdin to ${file}." "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} tee "${file}" >/dev/null
+    tee "${file}" >/dev/null
     if [ "$?" -gt 0 ]; then
         PRINT "Could not write to ${file}." "error"
         return 1
@@ -745,15 +717,13 @@ FILE_PIPE_APPEND()
 {
     SPACE_SIGNATURE="file:1"
     SPACE_DEP="PRINT"
-    SPACE_ENV="SUDO=${SUDO-}"
 
     local file="${1}"
     shift
 
     PRINT "pipe stdin to ${file}." "debug"
 
-    local SUDO="${SUDO-}"
-    ${SUDO} tee -a "${file}" >/dev/null
+    tee -a "${file}" >/dev/null
     if [ "$?" -gt 0 ]; then
         PRINT "Could not append to ${file}." "error"
         return 1
@@ -776,7 +746,6 @@ FILE_PIPE_APPEND()
 FILE_GET_PERMISSIONS()
 {
     SPACE_SIGNATURE="file:1 [maxdepth]"
-    SPACE_ENV="SUDO=${SUDO-}"
     SPACE_DEP="PRINT"
 
     local file="${1}"
@@ -785,10 +754,9 @@ FILE_GET_PERMISSIONS()
     local maxdepth="${1:+-maxdepth ${1}}"
     shift $(( $# > 0 ? 1 : 0 ))
 
-    local SUDO="${SUDO-}"
-    PRINT "Get all permissions for ${file}, SUDO=${SUDO}." "debug"
+    PRINT "Get all permissions for ${file}." "debug"
     # shellcheck disable=2086
-    ${SUDO} find "${file}" ${maxdepth} -exec stat -c"%n %a %U:%G" {} \;
+    find "${file}" ${maxdepth} -exec stat -c"%n %a %U:%G" {} \;
 }
 
 #=============
@@ -810,8 +778,6 @@ FILE_RESTORE_PERMISSIONS()
     # shellcheck disable=2034
     SPACE_SIGNATURE="dir:1 permissions:1"
     # shellcheck disable=2034
-    SPACE_ENV="SUDO=${SUDO-}"
-    # shellcheck disable=2034
     SPACE_DEP="PRINT"
 
     local dir="${1}"
@@ -820,9 +786,7 @@ FILE_RESTORE_PERMISSIONS()
     local permissions="${1}"
     shift
 
-    local SUDO="${SUDO-}"
-
-    PRINT "Restore permissions in ${dir}, SUDO=${SUDO}." "debug"
+    PRINT "Restore permissions in ${dir}." "debug"
 
     cd ${dir:-.}
     if [ "$?" -gt 0 ]; then
@@ -836,11 +800,11 @@ FILE_RESTORE_PERMISSIONS()
     for line in ${permissions}; do
         printf "%s\n" "${line}" | {
             IFS=" " read -r file mod user
-            ${SUDO} chown "${user}" "${file}"
+            chown "${user}" "${file}"
             if [ "$?" -gt 0 ]; then
                 return 1
             fi
-            ${SUDO} chmod "${mod}" "${file}"
+            chmod "${mod}" "${file}"
             if [ "$?" -gt 0 ]; then
                 return 1
             fi
