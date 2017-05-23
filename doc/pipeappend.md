@@ -2,6 +2,7 @@
 modulename: File
 title: /pipeappend/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/pipeappend.md
 weight: 200
 ---
 # File module: Pipe append

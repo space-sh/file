@@ -2,6 +2,7 @@
 modulename: File
 title: /ls/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/ls.md
 weight: 200
 ---
 # File module: List

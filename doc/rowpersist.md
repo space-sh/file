@@ -2,6 +2,7 @@
 modulename: File
 title: /rowpersist/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/rowpersist.md
 weight: 200
 ---
 # File module: Row exists

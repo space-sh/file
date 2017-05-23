@@ -2,6 +2,7 @@
 modulename: File
 title: /rowexist/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/rowexist.md
 weight: 200
 ---
 # File module: Row exists

@@ -2,6 +2,7 @@
 modulename: File
 title: /getpermissions/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/getpermissions.md
 weight: 200
 ---
 # File module: Get permissions

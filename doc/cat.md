@@ -2,6 +2,7 @@
 modulename: File
 title: /cat/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/cat.md
 weight: 200
 ---
 # File module: Cat

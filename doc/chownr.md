@@ -2,6 +2,7 @@
 modulename: File
 title: /chownr/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/chownr.md
 weight: 200
 ---
 # File module: Change ownership

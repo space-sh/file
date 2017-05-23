@@ -2,6 +2,7 @@
 modulename: File
 title: /rmrf/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/rmrf.md
 weight: 200
 ---
 # File module: Remove recursively

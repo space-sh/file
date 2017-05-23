@@ -2,6 +2,7 @@
 modulename: File
 title: /pipewrite/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/pipewrite.md
 weight: 200
 ---
 # File module: Pipe write

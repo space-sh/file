@@ -2,6 +2,7 @@
 modulename: File
 title: /cp/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/cp.md
 weight: 200
 ---
 # File module: Copy

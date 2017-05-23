@@ -2,6 +2,7 @@
 modulename: File
 title: /touch/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/touch.md
 weight: 200
 ---
 # File module: Touch

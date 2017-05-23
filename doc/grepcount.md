@@ -2,6 +2,7 @@
 modulename: File
 title: /grepcount/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/grepcount.md
 weight: 200
 ---
 # File module: Grep and count

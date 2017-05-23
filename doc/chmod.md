@@ -2,6 +2,7 @@
 modulename: File
 title: /chmod/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/chmod.md
 weight: 200
 ---
 # File module: Change modes

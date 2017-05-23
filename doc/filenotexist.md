@@ -2,6 +2,7 @@
 modulename: File
 title: /filenotexist/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/filenotexist.md
 weight: 200
 ---
 # File module: Check file

@@ -2,6 +2,7 @@
 modulename: File
 title: /direxist/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/direxist.md
 weight: 200
 ---
 # File module: Check directory

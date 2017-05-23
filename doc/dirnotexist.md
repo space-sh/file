@@ -2,6 +2,7 @@
 modulename: File
 title: /dirnotexist/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/dirnotexist.md
 weight: 200
 ---
 # File module: Check directory

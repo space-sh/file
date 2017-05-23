@@ -2,6 +2,7 @@
 modulename: File
 title: Overview
 giturl: gitlab.com/space-sh/file
+editurl: /edit/master/doc/index.md
 weight: 100
 ---
 # File module

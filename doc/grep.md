@@ -2,6 +2,7 @@
 modulename: File
 title: /grep/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/grep.md
 weight: 200
 ---
 # File module: Grep

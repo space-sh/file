@@ -2,6 +2,7 @@
 modulename: File
 title: /restorepermissions/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/restorepermissions.md
 weight: 200
 ---
 # File module: Restore permissions

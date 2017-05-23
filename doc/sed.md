@@ -2,6 +2,7 @@
 modulename: File
 title: /sed/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/sed.md
 weight: 200
 ---
 # File module: Sed

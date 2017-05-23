@@ -2,6 +2,7 @@
 modulename: File
 title: /mkdirp/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/mkdirp.md
 weight: 200
 ---
 # File module: Make directory path

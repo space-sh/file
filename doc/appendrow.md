@@ -2,6 +2,7 @@
 modulename: File
 title: /appendrow/
 giturl: gitlab.com/space-sh/File
+editurl: /edit/master/doc/appendrow.md
 weight: 200
 ---
 # File module: Append row
