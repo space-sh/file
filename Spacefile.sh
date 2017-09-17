@@ -756,7 +756,7 @@ FILE_GET_PERMISSIONS()
 
     PRINT "Get all permissions for ${file}." "debug"
     # shellcheck disable=2086
-    find "${file}" ${maxdepth} -exec stat -c"%n %a %U:%G" {} \;
+    find "${file}" ${maxdepth} -exec stat -c"%n %a %u:%g" {} \;
 }
 
 #=============
