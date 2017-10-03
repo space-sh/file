@@ -1,5 +1,10 @@
 # Space Module change log - file
 
+## [1.1.3 - 2017-10-03]
+
+* Change user:group to uid:gid
+
+
 ## [1.1.2 - 2017-06-11]
 
 * Update documentation
