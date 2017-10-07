@@ -29,8 +29,17 @@
 FILE_DEP_INSTALL()
 {
     SPACE_DEP="PRINT"
-    PRINT "No particular dependencies." "ok"
-    # TODO: check for grep, sed
+
+    PRINT "Checking for FILE dependencies." "info"
+
+    # Don't check for programs using OS_IS_INSTALLED here
+    # to prevent circular dependency
+    if command -v "grep" >/dev/null && command -v "sed" >/dev/null ; then
+        PRINT "Dependencies found." "ok"
+    else
+        PRINT "Failed finding dependencies. Requirements: grep and sed" "error"
+        return 1
+    fi
 }
 
 #=============
