@@ -1,5 +1,10 @@
 # Space Module change log - file
 
+## [1.1.4 - 2017-10-19]
+
+* Update `DEP_INSTALL` to check for dependencies
+
+
 ## [1.1.3 - 2017-10-03]
 
 * Change user:group to uid:gid
