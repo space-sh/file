@@ -1,5 +1,10 @@
 # Space Module change log - file
 
+## [current]
+
+* Update `FILE_STAT` to translate last modified format option
+
+
 ## [1.2.0 - 2018-01-02]
 
 + Add `FILE_STAT`

@@ -854,7 +854,7 @@ FILE_STAT()
     # Check for BSD stat
     if command -v "pkg" >/dev/null || command -v "brew" >/dev/null ; then
         # Translate format options
-        format=$(printf "%s" "${format}" | sed -e s'/%a/%A/g' -e s'/%n/%N/g' -e s'/%U/%Su/g' -e s'/%G/%Sg/g')
+        format=$(printf "%s" "${format}" | sed -e s'/%a/%A/g' -e s'/%n/%N/g' -e s'/%U/%Su/g' -e s'/%G/%Sg/g' -e s'/%Y/%m/g')
         stat -f "${format}" "${file}"
     else
         stat -c "${format}" "${file}"
