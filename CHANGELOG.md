@@ -1,5 +1,14 @@
 # Space Module change log - file
 
+## [1.2.0 - 2018-01-02]
+
++ Add `FILE_STAT`
+
++ Add `/stat/`
+
+* Update `FILE_GET_PERMISSIONS` to use `FILE_STAT`
+
+
 ## [1.1.4 - 2017-10-19]
 
 * Update `DEP_INSTALL` to check for dependencies
