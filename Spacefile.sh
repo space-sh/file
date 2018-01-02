@@ -825,6 +825,46 @@ FILE_RESTORE_PERMISSIONS()
 }
 
 #=============
+# FILE_STAT
+#
+# Display file status
+#
+# Parameters:
+#   $1: file path
+#
+# Returns:
+#   0: success
+#   1: failure
+#
+#=============
+FILE_STAT()
+{
+    SPACE_SIGNATURE="file:1 format:1"
+    SPACE_DEP="PRINT"
+
+    local file="${1}"
+    shift
+
+    local format="${1}"
+    shift
+
+    #
+    # Check for BSD stat
+    if command -v "pkg" >/dev/null || command -v "brew" >/dev/null ; then
+        # Translate format options
+        format=$(printf "%s" "${format}" | sed -e s'/%a/%A/g' -e s'/%n/%N/g' -e s'/%U/%Su/g' -e s'/%G/%Sg/g')
+        stat -f "${format}" "${file}"
+    else
+        stat -c "${format}" "${file}"
+    fi
+
+    if [ "$?" -gt 0 ]; then
+        PRINT "Failed to stat file: ${file}." "error"
+        return 1
+    fi
+}
+
+#=============
 # _FILE_AC
 #
 # Helper function when using auto completion on files.

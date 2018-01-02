@@ -536,6 +536,18 @@ restorepermissions:
                         - longblobwithpermissions
         - RUN: FILE_RESTORE_PERMISSIONS -- "${file}" "${permissions}"
 
+stat:
+    _info:
+        title: Display file status
+        desc: |
+            stat -c.
+    _env:
+        - file:
+            title: File path
+        - format:
+            title: Format options
+        - RUN: FILE_STAT -- "${file}" "${format}"
+
 _list_files:
     _env:
         - RUN: _FILE_AC "0" -- "${file-}"
