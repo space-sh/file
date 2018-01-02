@@ -143,6 +143,13 @@ Handles file operations, including creating, searching, setting permissions and 
 	Sed a pattern in place
 
 
+## /stat/
+	Display file status
+
+	stat -c.
+	
+
+
 ## /touch/
 	Touch a file
 
@@ -503,6 +510,21 @@ Restore permissions.
 ### Returns:  
 - 0: success  
 - 1: failed to chown or failed to chmod  
+  
+  
+  
+## FILE\_STAT()  
+  
+  
+  
+Display file status  
+  
+### Parameters:  
+- $1: file path  
+  
+### Returns:  
+- 0: success  
+- 1: failure  
   
   
   
