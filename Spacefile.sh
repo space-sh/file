@@ -755,7 +755,7 @@ FILE_PIPE_APPEND()
 FILE_GET_PERMISSIONS()
 {
     SPACE_SIGNATURE="file:1 [maxdepth]"
-    SPACE_DEP="PRINT"
+    SPACE_DEP="PRINT FILE_STAT"
 
     local file="${1}"
     shift
@@ -764,8 +764,10 @@ FILE_GET_PERMISSIONS()
     shift $(( $# > 0 ? 1 : 0 ))
 
     PRINT "Get all permissions for ${file}." "debug"
-    # shellcheck disable=2086
-    find "${file}" ${maxdepth} -exec stat -c"%n %a %u:%g" {} \;
+    local filename=
+    for filename in $(find "${file}" ${maxdepth} -name "*"); do
+        FILE_STAT ${filename} "%n %a %u:%g"
+    done
 }
 
 #=============
