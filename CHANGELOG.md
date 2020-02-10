@@ -1,5 +1,14 @@
 # Space Module change log - file
 
+## [1.3.0 - 2020-02-10]
+
++ Add `FILE_ROW_REMOVE`
+
++ Add `FILE_DIR_CHECKSUM`
+
++ Add `/dirchecksum/`
+
+
 ## [1.2.1 - 2018-01-02]
 
 * Update `FILE_STAT` to translate last modified format option
