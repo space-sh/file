@@ -522,7 +522,7 @@ FILE_ROW_PERSIST()
 #=============
 # FILE_ROW_REMOVE
 #
-# Remove all occurrences of a specific rom from a text file.
+# Remove all occurrences of a specific row from a text file.
 #
 # Parameters:
 #   $1: row data to have removed
@@ -556,7 +556,7 @@ FILE_ROW_REMOVE()
         # Row does exist, remove all.
         local tmpfile="${file}.TemporarY"
         if mv "${file}" "${tmpfile}" && (grep -v "^${row}\$" "${tmpfile}" >"${file}"; rm "${tmpfile}"); then
-            # All good, fal through
+            # All good, fall through
             :
         else
             PRINT "Could not write to file" "debug"
