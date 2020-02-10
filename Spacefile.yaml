@@ -548,6 +548,16 @@ stat:
             title: Format options
         - RUN: FILE_STAT -- "${file}" "${format}"
 
+dirchecksum:
+    _info:
+        title: Get the checksum of the metadata of a directory, recursively
+        desc: |
+            Checksum the current state of a directory and print it to stdout
+    _env:
+        - dir:
+            title: The directory to checksum, recursively
+        - RUN: FILE_DIR_CHECKSUM "${dir}"
+
 _list_files:
     _env:
         - RUN: _FILE_AC "0" -- "${file-}"

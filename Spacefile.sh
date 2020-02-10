@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2017 Blockie AB
+# Copyright 2016-2020 Blockie AB
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -520,6 +520,52 @@ FILE_ROW_PERSIST()
 }
 
 #=============
+# FILE_ROW_REMOVE
+#
+# Remove all occurrences of a specific rom from a text file.
+#
+# Parameters:
+#   $1: row data to have removed
+#   $2: file to remove from
+#
+# Returns:
+#   0: success
+#   1: could not write to file
+#
+#=============
+FILE_ROW_REMOVE()
+{
+    SPACE_SIGNATURE="row:1 file:1"
+    SPACE_DEP="PRINT"
+
+    local row="${1}"
+    shift
+
+    local file="${1}"
+    shift
+
+    PRINT "Remove specific row from file ${file}: ${row}" "debug"
+
+    grep -q "^${row}\$" "${file}" 2>/dev/null
+    local status="$?"
+    if [ "${status}" = "2" ]; then
+        PRINT "File not found: ${file}." "debug"
+    elif [ "${status}" = "1" ]; then
+        PRINT "Row does not exist" "debug"
+    else
+        # Row does exist, remove all.
+        local tmpfile="${file}.TemporarY"
+        if mv "${file}" "${tmpfile}" && (grep -v "^${row}\$" "${tmpfile}" >"${file}"; rm "${tmpfile}"); then
+            # All good, fal through
+            :
+        else
+            PRINT "Could not write to file" "debug"
+            return 1
+        fi
+    fi
+}
+
+#=============
 # FILE_GREP
 #
 # Grep on file.
@@ -864,6 +910,43 @@ FILE_STAT()
         PRINT "Failed to stat file: ${file}." "error"
         return 1
     fi
+}
+
+#=============
+# FILE_DIR_CHECKSUM
+#
+# Calculate the checksum of a directories recursive metadata (dates, sizes, etc) to be
+# able to notice when any file has changed.
+#
+# Parameters:
+#   $1: dir path
+#
+# Returns:
+#   0: success
+#   1: failure if there is not checksum tool available.
+#
+#=============
+FILE_DIR_CHECKSUM()
+{
+    SPACE_SIGNATURE="dir"
+
+    local dir="${1}"
+    shift
+
+    local _SHASUMBIN=
+    if command -v sha256sum >/dev/null; then
+        _SHASUMBIN=sha256sum
+    elif command -v sha1sum >/dev/null; then
+        _SHASUMBIN=sha1sum
+    elif command -v shasum >/dev/null; then
+        _SHASUMBIN="shasum -a 256"
+    elif command -v md5sum >/dev/null; then
+        _SHASUMBIN="md5sum"
+    else
+        return 1
+    fi
+
+    ls -lAR "${dir}" |${_SHASUMBIN} |cut -f 1 -d' '
 }
 
 #=============
