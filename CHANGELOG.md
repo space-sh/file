@@ -1,5 +1,10 @@
 # Space Module change log - file
 
+## [1.3.1 - 2020-02-20]
+
+* Update documentation
+
+
 ## [1.3.0 - 2020-02-10]
 
 + Add `FILE_ROW_REMOVE`
