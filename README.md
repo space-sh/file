@@ -1,4 +1,4 @@
-# File module | [![build status](https://gitlab.com/space-sh/file/badges/master/build.svg)](https://gitlab.com/space-sh/file/commits/master)
+# File module | [![build status](https://gitlab.com/space-sh/file/badges/master/pipeline.svg)](https://gitlab.com/space-sh/file/commits/master)
 
 Handles file operations, including creating, searching, setting permissions and removing files.
 
@@ -36,6 +36,13 @@ Handles file operations, including creating, searching, setting permissions and 
 	This does not copy file from or to a
 	remote system, use /cat/ and /pipewrite/
 	for that.
+	
+
+
+## /dirchecksum/
+	Get the checksum of the metadata of a directory, recursively
+
+	Checksum the current state of a directory and print it to stdout
 	
 
 
@@ -398,6 +405,22 @@ creates the file if it's missing.
   
   
   
+## FILE\_ROW\_REMOVE()  
+  
+  
+  
+Remove all occurrences of a specific row from a text file.  
+  
+### Parameters:  
+- $1: row data to have removed  
+- $2: file to remove from  
+  
+### Returns:  
+- 0: success  
+- 1: could not write to file  
+  
+  
+  
 ## FILE\_GREP()  
   
   
@@ -525,6 +548,22 @@ Display file status
 ### Returns:  
 - 0: success  
 - 1: failure  
+  
+  
+  
+## FILE\_DIR\_CHECKSUM()  
+  
+  
+  
+Calculate the checksum of a directories recursive metadata (dates, sizes, etc) to be  
+able to notice when any file has changed.  
+  
+### Parameters:  
+- $1: dir path  
+  
+### Returns:  
+- 0: success  
+- 1: failure if there is not checksum tool available.  
   
   
   
