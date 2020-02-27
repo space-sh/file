@@ -46,6 +46,13 @@ Handles file operations, including creating, searching, setting permissions and 
 	
 
 
+## /dirchecksumcontent/
+	Get the checksum of the file contents of a directory, recursively
+
+	Checksum the current contents of a directory and print it to stdout
+	
+
+
 ## /direxist/
 	Check so a directory path does exist
 
@@ -557,6 +564,21 @@ Display file status
   
 Calculate the checksum of a directories recursive metadata (dates, sizes, etc) to be  
 able to notice when any file has changed.  
+  
+### Parameters:  
+- $1: dir path  
+  
+### Returns:  
+- 0: success  
+- 1: failure if there is not checksum tool available.  
+  
+  
+  
+## FILE\_DIR\_CHECKSUM\_CONTENT()  
+  
+  
+  
+Calculate the checksum of a directories recursive content.  
   
 ### Parameters:  
 - $1: dir path  
