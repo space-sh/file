@@ -1,5 +1,14 @@
 # Space Module change log - file
 
+## [1.4.0 - 2020-02-27]
+
++ Add `FILE_DIR_CHECKSUM_CONTENT`
+
+* Change `FILE_DIR_CHECKSUM` to `cd` into directory instead of relying on relative path before taking sum
+
+* Update documentation
+
+
 ## [1.3.1 - 2020-02-20]
 
 * Update documentation
