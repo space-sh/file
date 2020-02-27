@@ -558,6 +558,16 @@ dirchecksum:
             title: The directory to checksum, recursively
         - RUN: FILE_DIR_CHECKSUM "${dir}"
 
+dirchecksumcontent:
+    _info:
+        title: Get the checksum of the file contents of a directory, recursively
+        desc: |
+            Checksum the current contents of a directory and print it to stdout
+    _env:
+        - dir:
+            title: The directory to checksum, recursively
+        - RUN: FILE_DIR_CHECKSUM_CONTENT "${dir}"
+
 _list_files:
     _env:
         - RUN: _FILE_AC "0" -- "${file-}"

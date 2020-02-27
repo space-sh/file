@@ -947,7 +947,42 @@ FILE_DIR_CHECKSUM()
     fi
 
     (cd "${dir}" && ls -lAR "." |${_SHASUMBIN} |cut -f 1 -d' ')
-    ls -lAR "${dir}" |${_SHASUMBIN} |cut -f 1 -d' '
+}
+
+#=============
+# FILE_DIR_CHECKSUM_CONTENT
+#
+# Calculate the checksum of a directories recursive content.
+#
+# Parameters:
+#   $1: dir path
+#
+# Returns:
+#   0: success
+#   1: failure if there is not checksum tool available.
+#
+#=============
+FILE_DIR_CHECKSUM_CONTENT()
+{
+    SPACE_SIGNATURE="dir"
+
+    local dir="${1}"
+    shift
+
+    local _SHASUMBIN=
+    if command -v sha256sum >/dev/null; then
+        _SHASUMBIN=sha256sum
+    elif command -v sha1sum >/dev/null; then
+        _SHASUMBIN=sha1sum
+    elif command -v shasum >/dev/null; then
+        _SHASUMBIN="shasum -a 256"
+    elif command -v md5sum >/dev/null; then
+        _SHASUMBIN="md5sum"
+    else
+        return 1
+    fi
+
+    (cd "${dir}" && find . -type f -exec ${_SHASUMBIN} {} \; |sort -k2 |${_SHASUMBIN})
 }
 
 #=============
