@@ -982,7 +982,7 @@ FILE_DIR_CHECKSUM_CONTENT()
         return 1
     fi
 
-    (cd "${dir}" && find . -type f -exec ${_SHASUMBIN} {} \; |sort -k2 |${_SHASUMBIN})
+    (cd "${dir}" && find . -type f -exec ${_SHASUMBIN} {} \; |sort -k2 |${_SHASUMBIN} |cut -f 1 -d' ')
 }
 
 #=============
