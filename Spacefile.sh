@@ -946,6 +946,7 @@ FILE_DIR_CHECKSUM()
         return 1
     fi
 
+    (cd "${dir}" && ls -lAR "." |${_SHASUMBIN} |cut -f 1 -d' ')
     ls -lAR "${dir}" |${_SHASUMBIN} |cut -f 1 -d' '
 }
 
