@@ -1,5 +1,10 @@
 # Space Module change log - file
 
+## [1.4.1 - 2020-02-27]
+
+* Fix `FILE_DIR_CHECKSUM_CONTENT` returning multiple columns
+
+
 ## [1.4.0 - 2020-02-27]
 
 + Add `FILE_DIR_CHECKSUM_CONTENT`
