@@ -12,6 +12,9 @@ The _File_ module handles common file operations, including creating, removing, 
 
 ## Dependencies
 
+Modules:  
++ string  
+
 External:  
 + grep  
 + sed  
