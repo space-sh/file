@@ -120,6 +120,13 @@ Handles file operations, including creating, searching, setting permissions and 
 	Write data to file read from stdin
 
 
+## /realpath/
+	Retrieves the file or directory absolute path
+
+	Figures out the absolute path of a given file or directory. It follows "..", but does not resolve symlinks.
+	
+
+
 ## /restorepermissions/
 	Restore list of permissions
 
@@ -585,6 +592,25 @@ Calculate the checksum of a directories recursive content.
   
 ### Returns:  
 - 0: success  
+- Text output on stdout.  
+- 1: failure if there is not checksum tool available.  
+  
+  
+  
+## FILE\_REALPATH()  
+  
+  
+  
+Figure out a file/dir's absolute path, it follows ".." but does not resolve symlinks.  
+  
+The file/dir does not have to exist.  
+  
+### Parameters:  
+- $1: file path (relative or not)  
+  
+### Returns:  
+- 0: success  
+- Text output on stdout.  
 - 1: failure if there is not checksum tool available.  
   
   
