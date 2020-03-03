@@ -570,6 +570,16 @@ dirchecksumcontent:
             title: The directory to checksum, recursively
         - RUN: FILE_DIR_CHECKSUM_CONTENT "${dir}"
 
+realpath:
+    _info:
+        title: Retrieves the file or directory absolute path
+        desc: |
+            Figures out the absolute path of a given file or directory. It follows "..", but does not resolve symlinks.
+    _env:
+        - path:
+            title: The file or directory to retrieve the absolute path from
+        - RUN: FILE_REALPATH "${path}"
+
 _list_files:
     _env:
         - RUN: _FILE_AC "0" -- "${file-}"
