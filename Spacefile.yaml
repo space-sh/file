@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 ---
+@clone: string
+
 _dep_install:
     _info:
         title: Check dependencies for this module.

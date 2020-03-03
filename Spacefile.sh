@@ -959,6 +959,7 @@ FILE_DIR_CHECKSUM()
 #
 # Returns:
 #   0: success
+#       Text output on stdout.
 #   1: failure if there is not checksum tool available.
 #
 #=============
@@ -983,6 +984,81 @@ FILE_DIR_CHECKSUM_CONTENT()
     fi
 
     (cd "${dir}" && find . -type f -exec ${_SHASUMBIN} {} \; |sort -k2 |${_SHASUMBIN} |cut -f 1 -d' ')
+}
+
+#=============
+# FILE_REALPATH
+#
+# Figure out a file/dir's absolute path, it follows ".." but does not resolve symlinks.
+#
+# The file/dir does not have to exist.
+#
+# Parameters:
+#   $1: file path (relative or not)
+#
+# Returns:
+#   0: success
+#       Text output on stdout.
+#   1: failure if there is not checksum tool available.
+#
+#=============
+FILE_REALPATH()
+{
+    SPACE_SIGNATURE="file"
+    SPACE_DEP="STRING_ITEM_COUNT STRING_ITEM_GET"
+
+    local file="${1}"
+
+    if [ "${file#/}" != "${file}" ]; then
+        # Already absolute
+        # Fall through for cleaning swipe
+        :
+    else
+        # Prepend the current directory.
+        file="${PWD}/${file}"
+    fi
+
+    # Remove dots and act on double dots.
+    local count=
+    local item=
+    while true; do
+        IFS="/" STRING_ITEM_COUNT "${file}" "count"
+        local index=-1
+        local keepIndexes=""
+        while [ "${index}" -lt "$((count-1))" ]; do
+            index="$((index+1))"
+            IFS="/" STRING_ITEM_GET "${file}" "${index}" "item"
+            if [ -z "${item}" ]; then
+                # Discard it
+                continue
+            elif [ "${item}" = "." ]; then
+                # Discard it
+                continue
+            elif [ "${item}" = ".." ]; then
+                # Discard this one, and also the previous one
+                # Cut away last keep index
+                keepIndexes="${keepIndexes%[ ]*}"
+                continue
+            fi
+            # Keep this one. The space here is important in all cases due to how it is cut above.
+            keepIndexes="${keepIndexes} ${index}"
+        done
+        # Put together the file again
+        local file2=
+        for index in ${keepIndexes}; do
+            IFS="/" STRING_ITEM_GET "${file}" "${index}" "item"
+            file2="${file2}/${item}"
+        done
+        if [ "${file}" = "${file2}" ]; then
+            # We are done
+            file="${file2}"
+            break
+        fi
+        file="${file2}"
+    done
+    file="${file:-/}"
+
+    printf "%s\\n" "${file}"
 }
 
 #=============
