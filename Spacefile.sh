@@ -1022,12 +1022,18 @@ FILE_REALPATH()
     local count=
     local item=
     while true; do
-        IFS="/" STRING_ITEM_COUNT "${file}" "count"
+        local _ifs="${IFS}"
+        IFS="/"
+        STRING_ITEM_COUNT "${file}" "count"
+        IFS=${_ifs}
         local index=-1
         local keepIndexes=""
         while [ "${index}" -lt "$((count-1))" ]; do
             index="$((index+1))"
-            IFS="/" STRING_ITEM_GET "${file}" "${index}" "item"
+            local _ifs="${IFS}"
+            IFS="/"
+            STRING_ITEM_GET "${file}" "${index}" "item"
+            IFS=${_ifs}
             if [ -z "${item}" ]; then
                 # Discard it
                 continue
@@ -1046,7 +1052,10 @@ FILE_REALPATH()
         # Put together the file again
         local file2=
         for index in ${keepIndexes}; do
-            IFS="/" STRING_ITEM_GET "${file}" "${index}" "item"
+            local _ifs="${IFS}"
+            IFS="/"
+            STRING_ITEM_GET "${file}" "${index}" "item"
+            IFS=${_ifs}
             file2="${file2}/${item}"
         done
         if [ "${file}" = "${file2}" ]; then
