@@ -1,5 +1,14 @@
 # Space Module change log - file
 
+## [1.5.0 - 2020-03-04]
+
++ Add `FILE_REALPATH`
+
++ Add `/realpath/`
+
+* Update documentation
+
+
 ## [1.4.1 - 2020-02-27]
 
 * Fix `FILE_DIR_CHECKSUM_CONTENT` returning multiple columns
