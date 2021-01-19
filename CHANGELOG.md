@@ -1,5 +1,16 @@
 # Space Module change log - file
 
+## [1.6.0 - 2021-01-19]
+
++ Add `FILE_CHECKSUM`
+
++ Add `pwd` argument to `FILE_REALPATH`
+
+* Fix setting `IFS`
+
+* Syntax improvements
+
+
 ## [1.5.0 - 2020-03-04]
 
 + Add `FILE_REALPATH`
