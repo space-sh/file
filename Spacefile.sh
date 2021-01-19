@@ -852,11 +852,12 @@ FILE_RESTORE_PERMISSIONS()
     fi
 
     local line=
-    IFS="
+    local IFS="
 "
     for line in ${permissions}; do
         printf "%s\n" "${line}" | {
-            IFS=" " read -r file mod user
+            IFS=" "
+            read -r file mod user
             chown "${user}" "${file}"
             if [ "$?" -gt 0 ]; then
                 return 1
@@ -869,6 +870,8 @@ FILE_RESTORE_PERMISSIONS()
         if [ "$?" -gt 0 ]; then
             return 1
         fi
+        IFS="
+"
     done
 }
 
@@ -879,6 +882,7 @@ FILE_RESTORE_PERMISSIONS()
 #
 # Parameters:
 #   $1: file path
+#   $2: format (these are GNU flags and will be translated to BSD style if BSD detected)
 #
 # Returns:
 #   0: success
@@ -910,6 +914,42 @@ FILE_STAT()
         PRINT "Failed to stat file: ${file}." "error"
         return 1
     fi
+}
+
+#=============
+# FILE_CHECKSUM
+#
+# Calculate the checksum of a single file's content using any natively available method.
+#
+# Parameters:
+#   $1: file path
+#
+# Returns:
+#   0: success
+#   1: failure if there is not checksum tool available.
+#
+#=============
+FILE_CHECKSUM()
+{
+    SPACE_SIGNATURE="file"
+
+    local file="${1}"
+    shift
+
+    local _SHASUMBIN=
+    if command -v sha256sum >/dev/null; then
+        _SHASUMBIN=sha256sum
+    elif command -v sha1sum >/dev/null; then
+        _SHASUMBIN=sha1sum
+    elif command -v shasum >/dev/null; then
+        _SHASUMBIN="shasum -a 256"
+    elif command -v md5sum >/dev/null; then
+        _SHASUMBIN="md5sum"
+    else
+        return 1
+    fi
+
+    ${_SHASUMBIN} "${file}" | cut -f 1 -d' '
 }
 
 #=============
@@ -946,7 +986,7 @@ FILE_DIR_CHECKSUM()
         return 1
     fi
 
-    (cd "${dir}" && ls -lAR "." |${_SHASUMBIN} |cut -f 1 -d' ')
+    (cd "${dir}" && ls -lAR "." | ${_SHASUMBIN} | cut -f 1 -d' ')
 }
 
 #=============
@@ -983,7 +1023,7 @@ FILE_DIR_CHECKSUM_CONTENT()
         return 1
     fi
 
-    (cd "${dir}" && find . -type f -exec ${_SHASUMBIN} {} \; |sort -k2 |${_SHASUMBIN} |cut -f 1 -d' ')
+    (cd "${dir}" && find . -type f -exec ${_SHASUMBIN} {} \; | sort -k2 | ${_SHASUMBIN} | cut -f 1 -d' ')
 }
 
 #=============
@@ -995,19 +1035,22 @@ FILE_DIR_CHECKSUM_CONTENT()
 #
 # Parameters:
 #   $1: file path (relative or not)
+#   $2: Working directory, overrides $PWD
 #
 # Returns:
 #   0: success
 #       Text output on stdout.
-#   1: failure if there is not checksum tool available.
 #
 #=============
 FILE_REALPATH()
 {
-    SPACE_SIGNATURE="file"
+    SPACE_SIGNATURE="file [pwd]"
     SPACE_DEP="STRING_ITEM_COUNT STRING_ITEM_GET"
 
     local file="${1}"
+    shift
+
+    local pwd="${1:-$PWD}"
 
     if [ "${file#/}" != "${file}" ]; then
         # Already absolute
@@ -1015,7 +1058,7 @@ FILE_REALPATH()
         :
     else
         # Prepend the current directory.
-        file="${PWD}/${file}"
+        file="${pwd}/${file}"
     fi
 
     # Remove dots and act on double dots.
@@ -1023,7 +1066,7 @@ FILE_REALPATH()
     local item=
     while true; do
         local _ifs="${IFS}"
-        IFS="/"
+        local IFS="/"
         STRING_ITEM_COUNT "${file}" "count"
         IFS=${_ifs}
         local index=-1

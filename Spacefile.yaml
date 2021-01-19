@@ -558,7 +558,7 @@ dirchecksum:
     _env:
         - dir:
             title: The directory to checksum, recursively
-        - RUN: FILE_DIR_CHECKSUM "${dir}"
+        - RUN: FILE_DIR_CHECKSUM -- "${dir}"
 
 dirchecksumcontent:
     _info:
@@ -568,7 +568,7 @@ dirchecksumcontent:
     _env:
         - dir:
             title: The directory to checksum, recursively
-        - RUN: FILE_DIR_CHECKSUM_CONTENT "${dir}"
+        - RUN: FILE_DIR_CHECKSUM_CONTENT -- "${dir}"
 
 realpath:
     _info:
@@ -578,7 +578,7 @@ realpath:
     _env:
         - path:
             title: The file or directory to retrieve the absolute path from
-        - RUN: FILE_REALPATH "${path}"
+        - RUN: FILE_REALPATH -- "${path}"
 
 _list_files:
     _env:
